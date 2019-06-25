@@ -6,6 +6,7 @@ module.exports = {
     name: 'maintenance',
     description: 'Lock down the server for maintenance.',
     guildOnly: true,
+    permissionsRequired: ['ADMINISTRATOR'],
     cooldown: 25,
     aliases: ['lockdown'],
     args: true,

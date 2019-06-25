@@ -4,6 +4,7 @@ module.exports = {
     name: 'about',
     description: 'Displays some about information.',
     cooldown: 30,
+    permissionsRequired: ['READ_MESSAGES'],
     aliases: ['aboutme', 'about-me'],
     usage: '[command name]',
     execute(message) {

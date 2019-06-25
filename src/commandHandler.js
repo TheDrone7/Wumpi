@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+const {Permissions} = require('discord.js');
 const {prefix} = require('./config.json');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -28,6 +29,13 @@ exports.commandHandler = function (message) {
         || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
     if (!command) return;
+
+    if (command.permissionsRequired && !(message.channel.type === "dm")) {
+        let permissions = new Permissions(command.permissionsRequired);
+        if (!message.member.hasPermission(permissions.toArray())) {
+            return message.reply('You don\'t have enough permissions to run that command! You need permissions `' + permissions.toArray() + '` to run that command.');
+        }
+    }
 
     if (command.guildOnly && message.channel.type !== 'text') {
         return message.reply('I can\'t execute that command inside DMs!');

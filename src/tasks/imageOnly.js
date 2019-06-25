@@ -4,6 +4,7 @@ module.exports = {
     name: 'imageonly',
     description: 'Sets the channel to image only.',
     aliases: ['set channel imageonly', 'set channel image-only', 'image-only'],
+    permissionsRequired: ['MANAGE_CHANNELS'],
     usage: '[command name]',
     cooldown: 45,
     execute(message, args) {

@@ -6,6 +6,7 @@ module.exports = {
     description: 'Displays some about information.',
     cooldown: 30,
     aliases: ['new', 'support'],
+    permissionsRequired: ['READ_MESSAGES'],
     usage: '[command name] "Reason"',
     execute(message, args, command) {
         let server = message.channel.guild;
