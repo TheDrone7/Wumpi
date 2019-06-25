@@ -15,43 +15,45 @@ module.exports = {
                 throw err;
             }
             let map = objToMap(data);
-            if(data.exists){
+            if (data.exists) {
                 let mapValues = map.values();
                 let mapKeys = map.keys();
-                if(mapValues[Symbol.iterator] === (message.channel.id) && mapKeys[Symbol.iterator] === ('image-only')){
+                if (mapValues[Symbol.iterator] === (message.channel.id) && mapKeys[Symbol.iterator] === ('image-only')) {
                     map.set(message.channel.id, 'text-channel');
                     obj = mapToObj(map);
                     message.reply('Disabling `image-only` mode for channel ' + message.channel.name + '.');
-                    fs.writeFile(file, JSON.stringify(obj, null, 2), function(err) {
+                    fs.writeFile(file, JSON.stringify(obj, null, 2), function (err) {
                         if (err) {
                             throw err;
-                        }else{
+                        } else {
                             console.log('Success! Logged ' + obj + ' to ' + file)
                         }
                     });
                 }
-            }else{
+            } else {
                 map.set(message.channel.id, 'image-only');
                 obj = mapToObj(map);
                 message.reply('Channel is now `image-only`, now you can prune away these messages!');
-                fs.writeFile(file, JSON.stringify(obj, null, 2), function(err) {
+                fs.writeFile(file, JSON.stringify(obj, null, 2), function (err) {
                     if (err) {
                         throw err;
-                    }else{
+                    } else {
                         console.log('Success! Logged ' + obj + ' to ' + file)
                     }
                 });
             }
         });
+
         function mapToObj(inputMap) {
             let objTemp = {};
 
-            inputMap.forEach(function(value, key){
+            inputMap.forEach(function (value, key) {
                 objTemp[key] = value;
             });
             return objTemp;
         }
-        function objToMap(obj){
+
+        function objToMap(obj) {
             let map = new Map();
 
             obj.forEach(function (value, key) {

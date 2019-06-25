@@ -1,4 +1,4 @@
-const { prefix } = require('../config.json');
+const {prefix} = require('../config.json');
 
 module.exports = {
     name: 'help',
@@ -8,14 +8,14 @@ module.exports = {
     cooldown: 10,
     execute(message, args) {
         const data = [];
-        const { commands } = message.client;
+        const {commands} = message.client;
 
         if (!args.length) {
             data.push('Here\'s a list of all my commands:');
             data.push(commands.map(command => command.name).join('\n'));
             data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`);
 
-            return message.author.send(data, { split: true })
+            return message.author.send(data, {split: true})
                 .then(() => {
                     if (message.channel.type === 'dm') return;
                     message.reply('I sent you a dm!');
@@ -42,6 +42,6 @@ module.exports = {
 
         data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 
-        message.channel.send(data, { split: true });
+        message.channel.send(data, {split: true});
     },
 };
