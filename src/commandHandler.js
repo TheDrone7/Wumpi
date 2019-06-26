@@ -21,12 +21,8 @@ for (const file of commandFiles) {
 /** Cooldown collection */
 const cooldowns = new Discord.Collection();
 
-exports.commandHandler = function (message) {
-    guildSettings.findOne({
-        guildID: message.guild.id
-    }, (err, guild) => {
-        if (err) console.error(err);
-        const args = message.content.slice(guild.prefix.length).split(' '[0]);
+exports.commandHandler = function (message, guildPrefix) {
+    const args = message.content.slice(guildPrefix.length).split(' '[0]);
         const commandName = args.shift().toLowerCase();
 
         const command = client.commands.get(commandName)
@@ -49,7 +45,7 @@ exports.commandHandler = function (message) {
             let reply = `You didn't provide any arguments, ${message.author}!`;
 
             if (command.usage) {
-                reply += `\nThe proper usage would be: \`${guild.prefix}${command.name} ${command.usage}\``;
+                reply += `\nThe proper usage would be: \`${guildPrefix}${command.name} ${command.usage}\``;
             }
 
             return message.channel.send(reply);
@@ -81,5 +77,4 @@ exports.commandHandler = function (message) {
             console.error(error);
             message.reply('Error executing command!');
         }
-    });
 };

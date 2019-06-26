@@ -37,16 +37,21 @@ client.on('ready', async () => {
 });
 
 client.on('message', async message => {
-    guildSettings.findOne({
-        guildID: message.guild.id
-    }, (err, guild) => {
-        if (err) console.error(err);
-        if (!message.content.startsWith(guild.prefix) || message.author.bot) {
-            messageHandler.messageHandler(message);
-        } else {
-            commandHandler.commandHandler(message);
-        }
-    });
+    if (message.channel.type === "dm") {
+        messageHandler.messageHandler(message);
+    } else {
+        let currentGuildID = message.channel.guild.id;
+        guildSettings.findOne({
+            guildID: currentGuildID
+        }, (err, guild) => {
+            if (err) console.error(err);
+            if (!message.content.startsWith(guild.prefix) || message.author.bot) {
+                messageHandler.messageHandler(message);
+            } else {
+                commandHandler.commandHandler(message, guild.prefix);
+            }
+        });
+    }
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
