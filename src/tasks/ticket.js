@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['new', 'support'],
     permissionsRequired: ['READ_MESSAGES'],
     usage: '[command name] "Reason"',
-    execute(message, args, command) {
+    execute(message, args) {
         let server = message.channel.guild;
         let ticketEmbed = new Discord.RichEmbed()
             .setTitle('Support Ticket')

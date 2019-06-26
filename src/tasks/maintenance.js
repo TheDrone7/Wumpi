@@ -9,8 +9,7 @@ module.exports = {
     permissionsRequired: ['ADMINISTRATOR'],
     cooldown: 25,
     aliases: ['lockdown'],
-    args: true,
-    usage: '"Reason"',
+    usage: '[command name] "Reason"',
     execute(message, args) {
         let channelPerms = new Map[{
             guild_id: server.id,
