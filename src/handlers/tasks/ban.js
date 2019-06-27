@@ -8,10 +8,17 @@ module.exports = {
     usage: '[command name] @User "Reason"',
     args: true,
     guildOnly: true,
+    /** Simple ban command with a reason in Embedded form
+     *
+     * @param args {mentions.users.first} - First argument, if it's a user
+     * @param message {String} - Anything after the first argument
+     *
+     * returns channel message {Discord.RichEmbed}
+     * returns dm{Discord.RichEmbed}
+     * */
     execute(message, args) {
-        if (!message.mentions.users.size) {
+        if (!message.mentions.users.size)
             return message.reply('You need to tag a user to ban them.');
-        }
         const taggedUser = message.mentions.users.first();
         const reason = args.slice(1).join(" ");
         let banEmbed = new Discord.RichEmbed()

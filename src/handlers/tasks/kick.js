@@ -8,6 +8,11 @@ module.exports = {
     usage: '[command name] @User "Reason"',
     args: true,
     guildOnly: true,
+    /**
+     * @param message
+     * @param args
+     * @returns {Promise<Message | Message[]> | *}
+     */
     execute(message, args) {
         if (!message.mentions.users.size) {
             return message.reply('You need to tag a user to kick them.');

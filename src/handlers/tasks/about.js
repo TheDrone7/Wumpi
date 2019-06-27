@@ -7,19 +7,23 @@ module.exports = {
     permissionsRequired: ['READ_MESSAGES'],
     aliases: ['aboutme', 'about-me'],
     usage: '[command name]',
-    execute(message) {
+    /** Simple about command in embedded message.
+     *
+     * @param message {String}
+     *
+     * returns dm {Discord.RichEmbed}
+     * */
+    execute(message, args) {
         let aboutEmbed = new Discord.RichEmbed()
             .setTitle('About Me')
             .setTimestamp()
             .setColor(0x02f2e6)
             .setThumbnail('https://i.imgur.com/RBF518F.jpg')
             .setDescription('Moderation bot');
-
         return message.author.send(aboutEmbed)
             .then(() => {
                 if (message.channel.type === 'dm') return;
                 message.reply('I sent you a dm!');
-                message.delete(2000);
             })
             .catch(error => {
                 console.error(`Failed to send help DM to ${message.author.tag}.\n`, error);

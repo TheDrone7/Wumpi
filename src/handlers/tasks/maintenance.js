@@ -1,8 +1,8 @@
-const Discord = require("discord.js");
-const prefix = require('../config.json');
-const fs = require('fs');
+/**const Discord = require("discord.js");
+ const prefix = require('../../config.json');
+ const fs = require('fs');
 
-module.exports = {
+ module.exports = {
     name: 'maintenance',
     description: 'Lock down the server for maintenance.',
     guildOnly: true,
@@ -19,7 +19,6 @@ module.exports = {
         let server = message.channel.guild;
         let lockdownChannel = server.channels.find(c => c.name.toString() === "maintenance" && c.type === "text");
         if (!lockdownChannel) {
-            /* Fallback maintenance message, in case it isn't set. **/
             let maintenanceMessage =
                 'Default maintenance message.' +
                 '\nETA: 30 minutes';
@@ -87,4 +86,4 @@ module.exports = {
             console.log("Writing Data here");
         });
     }
-};
+};**/

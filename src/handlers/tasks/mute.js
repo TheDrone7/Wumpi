@@ -23,9 +23,7 @@ module.exports = {
             .setFooter(message.author.username);
         message.guild.member(taggedUser).ban(reason).catch();
         message.guild.createRole({name: 'Muted'});
-
         if (message.guild.roles)
-
             message.channel.send(muteEmbed).catch();
         taggedUser.send(muteEmbed).catch();
     }

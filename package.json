@@ -4,8 +4,14 @@
   "authors": "Alex, Edqe, Snow, Lean, Leon",
   "description": "The goal of this bot is to provide a full suite of moderation commands and functions. The bot not only will be available to make a moderators life easier, but automate as much as it can. This extends to new member scans and anti bot players. It also allows for automating the muting of spammers, swearing, racial slurs, and raiding. This will improve the overall security of your server. It also includes a backup function which will keep a 24/7 backup of your server.",
   "dependencies": {
-    "cleverbot-node": "^0.3.11",
-    "discord.js": "^11.5.1"
+    "discord.js": "^11.5.1",
+    "mongoose": "^5.5.12",
+    "express": "^4.17.1",
+    "disco-oauth": "^2.9.1",
+    "express-handlebars": "^3.1.0",
+    "body-parser": "^1.19.0",
+    "cookies": "^0.7.3",
+    "cleverbot-node": "^0.3.11"
   },
   "scripts": {
     "start": "node src/wumpi.js"
