@@ -1,4 +1,4 @@
-const guildSettings = require('../../lib/mongodb');
+const guildSettings = require('../../lib/guilddb');
 
 module.exports = {
     name: 'setcategory',
@@ -13,18 +13,18 @@ module.exports = {
         const currentGuildID = message.guild.id;
         const newCategory = args[0];
         guildSettings.findOne({
-            guildID: currentGuildID
+            id: currentGuildID
         }, (err, g) => {
             if (err) {
                 console.error(err);
             }
             message.guild.channels.forEach(c => {
                 if (c.name === newCategory) {
-                    g.ticketCategoryID = newCategory.id;
+                    g.channels.ticketCategoryID = newCategory.id;
                     return g.save();
                 }
                 if (c.id === newCategory) {
-                    g.ticketCategoryID = newCategory;
+                    g.channels.ticketCategoryID = newCategory;
                     return g.save();
                 }
             });

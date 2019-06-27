@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const guildSettings = require('../../lib/mongodb');
+const guildSettings = require('../../lib/guilddb');
 const ticketHandler = require('../ticketHandler.js');
 module.exports = {
     name: 'close',
@@ -19,10 +19,10 @@ module.exports = {
         let currentGuild = message.channel.guild;
         let currentGuildID = currentGuild.id;
         guildSettings.findOne({
-            guildID: currentGuildID
+            id: currentGuildID
         }, (err, g) => {
             if (err) console.error(err);
-            let ticketCategoryID = g.ticketCategoryID;
+            let ticketCategoryID = g.channels.ticketCategoryID;
             let reasonEmbed = new Discord.RichEmbed()
                 .setTitle('Ticket Closed')
                 .setTimestamp()

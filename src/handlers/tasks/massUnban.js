@@ -1,4 +1,4 @@
-const guildSettings = require('../../lib/mongodb');
+const guildSettings = require('../../lib/guilddb');
 const {client} = require('../../wumpi.js');
 
 module.exports = {

@@ -1,4 +1,4 @@
-const guildSettings = require('../../lib/mongodb');
+const guildSettings = require('../../lib/guilddb');
 
 module.exports = {
     name: 'setprefix',
@@ -14,12 +14,12 @@ module.exports = {
         const newPrefix = args[0];
         if (1 < newPrefix.size < 5) {
             guildSettings.findOne({
-                guildID: currentGuildID
+                id: currentGuildID
             }, (err, guild) => {
                 if (err) {
                     console.error(err);
                 }
-                guild.prefix = newPrefix;
+                guild.variables.prefix = newPrefix;
                 return guild.save();
             });
             message.reply('I\'ve set the guild prefix to `' + newPrefix + '`');

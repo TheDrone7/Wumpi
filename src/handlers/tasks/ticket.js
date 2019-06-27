@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const guildSettings = require('../../lib/mongodb');
+const guildSettings = require('../../lib/guilddb');
 const ticketHandler = require('../ticketHandler.js');
 const {client} = require('../../wumpi.js');
 module.exports = {
@@ -15,12 +15,12 @@ module.exports = {
         let currentGuild = message.channel.guild;
         let currentGuildID = currentGuild.id;
         guildSettings.findOne({
-            guildID: currentGuildID
+            id: currentGuildID
         }, (err, g) => {
             if (err) console.error(err);
-            let supportRoleID = g.supportRoleID;
-            let ticketCategoryID = g.ticketCategoryID;
-            let greetingMessage = g.ticketGreetingMessage;
+            let supportRoleID = g.variables.supportRoleID;
+            let ticketCategoryID = g.channels.ticketCategoryID;
+            let greetingMessage = g.variables.ticketGreetingMessage;
             let ticketUser;
             if (guild.member(message.author).roles.has(supportRoleID))
                 ticketUser = message.mentions.users.first();
@@ -41,15 +41,15 @@ module.exports = {
                     + '\n\n'
                     + 'You can close the ticket any time with -close');
             if (supportRoleID && ticketCategoryID) {
-                ticketHandler.ticket(message, guild, ticketUser, g.ticketMaxTicketCount, supportRoleID, ticketCategoryID, ticketEmbed)
+                ticketHandler.ticket(message, guild, ticketUser, g.variables.ticketMaxTicketCount, supportRoleID, ticketCategoryID, ticketEmbed)
             } else if (supportRoleID) {
-                ticketHandler.ticket(message, guild, ticketUser, g.ticketMaxTicketCount, supportRoleID, null, ticketEmbed)
+                ticketHandler.ticket(message, guild, ticketUser, g.variables.ticketMaxTicketCount, supportRoleID, null, ticketEmbed)
             } else {
                 guild.createRole({
                     name: 'Support Team',
                     color: "GREEN"
                 }).then(role => {
-                    ticketHandler.ticket(message, guild, ticketUser, g.ticketMaxTicketCount, role.id, null, ticketEmbed);
+                    ticketHandler.ticket(message, guild, ticketUser, g.variables.ticketMaxTicketCount, role.id, null, ticketEmbed);
                     g.supportRoleID = role.id;
                     g.save();
                 }).catch();

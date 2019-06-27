@@ -1,12 +1,12 @@
 const guildSettings = require('../../lib/guilddb');
 
 module.exports = {
-    name: 'imageonly',
-    description: 'Set your channel to image only mode. Removes all text from channel.',
+    name: 'botOnly',
+    description: 'Set your channel to bot only mode. Prevents users from talking in this channel.',
     guildOnly: true,
     cooldown: 60,
     permissionsRequired: ['ADMINISTRATOR'],
-    aliases: ['image', 'set channel imageonly', 'set channel image'],
+    aliases: ['bot', 'set channel bot'],
     args: false,
     usage: '[command name]',
     /**
@@ -22,23 +22,23 @@ module.exports = {
             if (err) {
                 console.error(err);
             }
-            if (g.imageOnlyChannelIDs.length === 0) {
-                g.imageOnlyChannelIDs = [currentChannel];
+            if (g.channels.botOnlyChannelIDs.length === 0) {
+                g.channels.botOnlyChannelIDs = [currentChannel];
                 g.save();
-                message.reply('Added `image-only` to `' + message.channel.name + '`.');
-                console.log('Added image-only to ' + message.channel.name);
+                message.reply('Added `bot-only` to `' + message.channel.name + '`.');
+                console.log('Added bot-only to ' + message.channel.name);
             } else {
-                g.imageOnlyChannelIDs.forEach(c => {
+                g.channels.botOnlyChannelIDs.forEach(c => {
                     if (c === currentChannel) {
-                        g.channels.imageOnlyChannelIDs = g.channels.imageOnlyChannelIDs.remove(currentChannel);
+                        g.channels.botOnlyChannelIDs = g.channels.botOnlyChannelIDs.remove(currentChannel);
                         g.save();
                         message.reply('Removed `bot-only` from `' + message.channel.name + '`.');
                         console.log('Removed bot-only from ' + message.channel.name);
                     } else {
-                        g.channels.imageOnlyChannelIDs = g.channels.imageOnlyChannelIDs.addToSet(currentChannel);
+                        g.channels.botOnlyChannelIDs = g.channels.botOnlyChannelIDs.addToSet(currentChannel);
                         g.save();
-                        message.reply('Added `image-only` to `' + message.channel.name + '`.');
-                        console.log('Added image-only to ' + message.channel.name);
+                        message.reply('Added `bot-only` to `' + message.channel.name + '`.');
+                        console.log('Added bot-only to ' + message.channel.name);
                     }
                 });
             }

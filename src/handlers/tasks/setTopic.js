@@ -1,4 +1,4 @@
-const guildSettings = require('../../lib/mongodb');
+const guildSettings = require('../../lib/guilddb');
 
 module.exports = {
     name: 'setTopic',
@@ -13,12 +13,12 @@ module.exports = {
         const currentGuildID = message.guild.id;
         let topic = args.slice(0).join(" ");
         guildSettings.findOne({
-            guildID: currentGuildID
+            id: currentGuildID
         }, (err, g) => {
             if (err) {
                 console.error(err);
             }
-            if (g.ticketCategoryID === message.channel.parentID) {
+            if (g.channels.ticketCategoryID === message.channel.parentID) {
                 message.channel.setName(topic + ' - ' + message.author.username);
                 message.reply('I\'ve set the topic to `' + topic + '`');
             } else {

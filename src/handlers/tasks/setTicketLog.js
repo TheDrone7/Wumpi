@@ -1,4 +1,4 @@
-const guildSettings = require('../../lib/mongodb');
+const guildSettings = require('../../lib/guilddb');
 
 module.exports = {
     name: 'setticketlog',
@@ -13,18 +13,18 @@ module.exports = {
         const currentGuildID = message.guild.id;
         const newChannel = args[0];
         guildSettings.findOne({
-            guildID: currentGuildID
+            id: currentGuildID
         }, (err, g) => {
             if (err) {
                 console.error(err);
             }
             message.guild.channels.forEach(c => {
                 if (c.name === newChannel) {
-                    g.ticketLogChannelID = newChannel.id;
+                    g.channels.ticketLogChannelID = newChannel.id;
                     return g.save();
                 }
                 if (c.id === newChannel) {
-                    g.ticketLogChannelID = newChannel;
+                    g.channels.ticketLogChannelID = newChannel;
                     return g.save();
                 }
             });
