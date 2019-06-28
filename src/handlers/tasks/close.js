@@ -34,7 +34,7 @@ module.exports = {
                     + '**Reason**: ' + reason)
                 .setFooter(message.author.username);
             if (ticketCategoryID === message.channel.parentID) {
-                ticketHandler.close(guild, message.channel, reasonEmbed, g.ticketLogChannelID);
+                ticketHandler.close(guild, message.channel, reasonEmbed, g.channels.ticketLogChannelID);
             } else {
                 message.reply('You need to run this command in a ticket channel!');
             }

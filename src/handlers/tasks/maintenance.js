@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const prefix = require('../../config.json');
 const maintenanceHandler = require('../maintenanceHandler.js');
 
 module.exports = {
@@ -13,7 +12,7 @@ module.exports = {
     execute(message, args) {
         let maintenanceMessage = 'Default maintenance message.\nETA: 30 minutes';
         if (args.length)
-            maintenanceMessage = message.content.replace(prefix, '');
+            maintenanceMessage = args.slice(0).join(" ");
         let maintenanceEmbed = new Discord.RichEmbed()
             .setTimestamp()
             .setColor(0xfc5c50)
@@ -25,7 +24,6 @@ module.exports = {
         let lockdownChannel = message.channel.guild.channels.find(c => c.name.toString() === "maintenance" && c.type === "text");
         if (!lockdownChannel) {
             maintenanceHandler.maintenanceStart(message, maintenanceEmbed);
-            maintenanceHandler.maintenanceSaveOverwrites(message);
         } else {
             maintenanceHandler.maintenanceStop(message, lockdownChannel);
         }

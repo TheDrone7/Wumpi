@@ -7,7 +7,6 @@ const guildSettings = require('../lib/guilddb');
 
 client.on('message', async message => {
     if (message.channel.type === "dm") {
-        if (!message.content.startsWith(default_prefix) || message.author.bot) {
             if (message.author.bot) return;
             cleverbot.write(message.content, (response) => {
                 message.channel.startTyping();
@@ -16,7 +15,6 @@ client.on('message', async message => {
                     message.channel.stopTyping();
                 }, Math.random() * (1 - 3) + 1 * 1000);
             });
-        }
     } else {
         let currentGuildID = message.channel.guild.id;
         if (currentGuildID !== null) {

@@ -1,17 +1,19 @@
-const guildSettings = require('../../lib/guilddb');
-const {client} = require('../../wumpi.js');
-
 module.exports = {
-    name: 'massUnban',
+    name: 'massunban',
     description: 'Unban all players',
     guildOnly: true,
     permissionsRequired: ['ADMINISTRATOR'],
     cooldown: 60,
-    args: true,
     aliases: ['unban all', 'unbanall', 'mass unban'],
     usage: '[command name]',
     async execute(message, args) {
         let guild = message.guild;
-        let bans = guild.fetchBans();
+        guild.fetchBans().then(bans => {
+            bans.array().forEach(b => {
+                guild.unban(b).catch();
+                console.log('Unbanned: ' + b.username);
+                message.reply('Unbanned all users!')
+            })
+        })
     }
 };

@@ -9,5 +9,6 @@ module.exports = (client) => {
             require(`../handlers/${f}`);
             console.log(`${i + 1}: ${f} loaded!`);
         });
+        client.setMaxListeners(10000);
     });
 };

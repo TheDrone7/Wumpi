@@ -35,7 +35,7 @@ module.exports = {
                         message.reply('Removed `bot-only` from `' + message.channel.name + '`.');
                         console.log('Removed bot-only from ' + message.channel.name);
                     } else {
-                        g.channels.imageOnlyChannelIDs = g.channels.imageOnlyChannelIDs.addToSet(currentChannel);
+                        g.channels.imageOnlyChannelIDs = g.channels.imageOnlyChannelIDs.push(currentChannel);
                         g.save();
                         message.reply('Added `image-only` to `' + message.channel.name + '`.');
                         console.log('Added image-only to ' + message.channel.name);

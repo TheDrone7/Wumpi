@@ -35,7 +35,7 @@ module.exports = {
                         message.reply('Removed `text-only` from `' + message.channel.name + '`.');
                         console.log('Removed text-only from ' + message.channel.name);
                     } else {
-                        g.userOnlyChannelIDs = g.userOnlyChannelIDs.addToSet(currentChannel);
+                        g.userOnlyChannelIDs = g.userOnlyChannelIDs.push(currentChannel);
                         g.save();
                         message.reply('Added `text-only` to `' + message.channel.name + '`.');
                         console.log('Added text-only to ' + message.channel.name);

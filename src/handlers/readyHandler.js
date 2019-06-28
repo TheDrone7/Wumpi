@@ -1,7 +1,6 @@
 const {default_prefix, db_url} = require('../config.json');
 const {client} = require('../wumpi.js');
 const guildSettings = require('../lib/guilddb');
-const guildOverwrites = require('../lib/guildOverwrites');
 const mongoose = require("mongoose");
 mongoose.connect(db_url, {useNewUrlParser: true}, (err) => {
     if (err) return console.error(err);
@@ -56,21 +55,6 @@ client.on('ready', async () => {
                     }
                 });
                 return newGuildSettings.save();
-            }
-        });
-
-        guildOverwrites.findOne({
-            id: id
-        }, (err, guild) => {
-            if (err) console.error(err);
-            if (!guild) {
-                const newGuildOverwrites = new guildOverwrites({
-                    id: id,
-                    channels: {
-                        overwrites: [],
-                    }
-                });
-                return newGuildOverwrites.save();
             }
         });
     });

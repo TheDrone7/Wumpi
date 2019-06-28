@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const guildOverwrites = new mongoose.Schema({
-    id: String,
+    guild_id: String,
     channels: {
-        overwrites: Array
+        overwrites: Map
     }
 });
+
 module.exports = mongoose.model('guildOverwrites', guildOverwrites);
