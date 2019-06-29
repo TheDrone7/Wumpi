@@ -9,7 +9,7 @@ module.exports = {
     aliases: ['new', 'support'],
     permissionsRequired: ['READ_MESSAGES'],
     usage: '[command name] "User" "Topic"',
-    execute: function (message, args) {
+    execute(message, args) {
         let guild = message.channel.guild;
         let topic = args.slice(0).join(" ");
         let currentGuild = message.channel.guild;
@@ -41,16 +41,16 @@ module.exports = {
                     + '\n\n'
                     + 'You can close the ticket any time with -close');
             if (supportRoleID && ticketCategoryID) {
-                ticketHandler.ticket(message, guild, ticketUser, g.variables.ticketMaxTicketCount, supportRoleID, ticketCategoryID, ticketEmbed)
+                ticketHandler.ticket(message, guild, ticketUser, supportRoleID, ticketCategoryID, ticketEmbed)
             } else if (supportRoleID) {
-                ticketHandler.ticket(message, guild, ticketUser, g.variables.ticketMaxTicketCount, supportRoleID, null, ticketEmbed)
+                ticketHandler.ticket(message, guild, ticketUser, supportRoleID, null, ticketEmbed)
             } else {
                 guild.createRole({
                     name: 'Support Team',
                     color: "GREEN"
                 }).then(role => {
-                    ticketHandler.ticket(message, guild, ticketUser, g.variables.ticketMaxTicketCount, role.id, null, ticketEmbed);
-                    g.supportRoleID = role.id;
+                    ticketHandler.ticket(message, guild, ticketUser, role.id, null, ticketEmbed);
+                    g.variables.supportRoleID = role.id;
                     g.save();
                 }).catch();
             }

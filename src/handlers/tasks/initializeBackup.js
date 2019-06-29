@@ -1,10 +1,11 @@
-/**const mongoose = require("mongoose");
+const mongoose = require("mongoose");
  const Backup = require("../../lib/backupdb.js");
 
- module.exports = {
+module.exports = {
     name: 'backup',
     description: 'Initialize backup function',
     guildOnly: true,
+    permissionsRequired: ['ADMINISTRATOR'],
     cooldown: 25,
     aliases: [''],
     usage: '[command name]',
@@ -46,16 +47,16 @@
                 }
 
                 //get role
-                let temp = []
+                let temp = [];
                 let roles = message.guild.roles;
                 roles.forEach(r => {
                     let name = r.name;
-                    let permission = r.permissions
-                    let position = r.calculatedPosition
-                    let color = r.color
-                    let hoist = r.hoist
-                    let mentionable = r.mentionable
-                    let id = r.id
+                    let permission = r.permissions;
+                    let position = r.calculatedPosition;
+                    let color = r.color;
+                    let hoist = r.hoist;
+                    let mentionable = r.mentionable;
+                    let id = r.id;
 
                     temp.push({
                         name: name,
@@ -66,50 +67,58 @@
                         mentionable: mentionable,
                         color: color
                     })
-                })
+                });
                 //===================================
 
                 //get channels properties
-                let temp2 = []
+                let temp2 = [];
                 let channels = message.guild.channels;
                 channels.forEach(c => {
                     let name = c.name;
-                    let pinnedMsg = [];
+                    //let pinnedMsg = [];
                     let parent;
-                    let permission = c.permissionOverwrites;
+                    let permission1 = c.permissionOverwrites;
+                    permission1.forEach((pe) => {
+                        if (pe.type === "member") {
+                            return;
+                        }
+
+                        let name = message.guild.roles.find(r => r.id === pe.id).name;
+                        // if(name === "@everyone") {
+                        //   return;
+                        // }
+
+                        pe.name = name
+                    });
+
+                    let permission = [permission1];
                     let id = c.id;
                     let position = c.calculatedPosition;
                     let type = c.type;
-
-//                     let fetch = c.fetchPinnedMessages()
-//                     fetch.array().forEach(f => {
-//                         let attachment = []
-//                         if (f.attachments.size > 0) {
-//                             let msgAttach = f.attachments
-//                             msgAttach.forEach(a => {
-//                                 attachment.push({
-//                                     url: a.url,
-//                                     filename: a.filename
-//                                 })
-//                             })
-//                         }
-
-//                         pinnedMsg.push({
-//                             message: f.content,
-//                             attachment: attachment
-//                         })
-//                     })
+                    let rateLimit;
+//
 
                     switch (type) {
                         case "category":
-                            parent = null
+                            parent = null;
+                            rateLimit = undefined;
+                            break;
+
+                        case "voice":
+                            if (!c.parent) {
+                                parent = null
+                            } else {
+                                parent = c.parent.name
+                            }
                             break;
 
                         default:
                             if(!c.parent) {
-                                parent = null
+                                parent = null;
+                                rateLimit = c.rateLimitPerUser
                             } else {
-                                parent = c.parent.name
+                                parent = c.parent.name;
+                                rateLimit = c.rateLimitPerUser
                             }
                             break;
                     }
@@ -120,10 +129,10 @@
                         id: id,
                         permission: permission,
                         position: position,
-                        pinnedMsg: pinnedMsg,
+                        rateLimit: rateLimit,
                         type: type
                     })
-                })
+                });
                 //===================================
 
                 const newBackup = new Backup({
@@ -142,14 +151,14 @@
                         roles: temp,
                     },
                     channels: temp2
-                })
+                });
 
-                message.channel.send("Successfuly initialized a backup! " + message.author + ", please keep the key private! *This key will only work with you*")
-                message.author.send("SAVE THIS! `" + result + "`")
+                message.channel.send("Successfuly initialized a backup! " + message.author + ", please keep the key private! *This key will only work with you*");
+                message.author.send("SAVE THIS! `" + result + "`");
                 return newBackup.save()
             } else {
                 message.channel.send("You already initialize a backup!")
             }
         })
     }
-};*/
+};

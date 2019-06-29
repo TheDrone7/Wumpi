@@ -1,11 +1,6 @@
-const {default_prefix, db_url} = require('../config.json');
+const {default_prefix} = require('../config.json');
 const {client} = require('../wumpi.js');
 const guildSettings = require('../lib/guilddb');
-const mongoose = require("mongoose");
-mongoose.connect(db_url, {useNewUrlParser: true}, (err) => {
-    if (err) return console.error(err);
-    console.log('Connected to MongoDB.');
-}).catch();
 
 client.on('ready', async () => {
     await client.guilds.keyArray().forEach(id => {

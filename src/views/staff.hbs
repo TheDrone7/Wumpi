@@ -1,0 +1,100 @@
+<head>
+
+    <link href="dashboard.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<iframe name="placeholder" value="none" style="display: none"></iframe>
+
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0">{{Username}}</a>
+    <a class="nav-link col-sm-2 col-md-2 mr-0" href="{{BotInvite}}" style="color: white">Invite Bot</a>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="welcome">Sign out</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="overview">
+                            Overview
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            Staff
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="channels">
+                            Channels
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Roles
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="custom">
+                            Custom
+                        </a>
+                    </li>
+                </ul>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+                <hr>
+                <br>
+            </div>
+            <div class="container-fluid">
+                <form method="POST" class="form" action="/setStaffProperties" target="placeholder">
+                    <div class="container">
+                        <h6>Main Settings</h6><br>
+                        <div class="container">
+                            Slow down: <input type="checkbox" name="SlowDown" id="SlowDown"><br>
+                            Auto Mode: <input type="checkbox" name="AutoMode" id="AutoMode"><br>
+                            Anti-Bot: <input type="checkbox" name="Antibot" id="Antibot"><br>
+                            Back-ups: <input type="checkbox" name="Backup" id="Backup"><br>
+                            Logs: <input type="checkbox" name="Logs" id="Logs"><br>
+                            Music: <input type="checkbox" name="Music" id="Music"><br>
+                            Invite-Tracker <input type="checkbox" name="ITracker" id="ITracker"><br>
+                            Support-Tickets <input type="checkbox" name="STickets" id="STickets">
+                        </div>
+                    </div>
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Set">
+                </form>
+            </div>
+            <br>
+            <hr>
+        </main>
+    </div>
+</div>
+
+<script>
+
+    var customOptions = JSON.parse(decodeURI("{{StaffOptions}}"));
+
+    $('#SlowDown').attr('checked', customOptions.isAutoSlowndownEnabled);
+    $('#AutoMode').attr('checked', customOptions.isAutoModeEnabled);
+    $('#Antibot').attr('checked', customOptions.isAntiBotEnabled);
+    $('#Backup').attr('checked', customOptions.isBackUpEnabled);
+    $('#Logs').attr('checked', customOptions.isActionLogEnabled);
+    $('#Music').attr('checked', customOptions.isMusicEnabled);
+    $('#ITracker').attr('checked', customOptions.isInviteTrackerEnabled);
+    $('#STicktes').attr('checked', customOptions.isSupportTicketsEnabled);
+
+</script>
+
+</body>

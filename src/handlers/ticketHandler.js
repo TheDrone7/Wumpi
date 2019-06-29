@@ -4,14 +4,13 @@
  * @param message
  * @param guild
  * @param ticketUser
- * @param maxTickets {Number}
  * @param supportRoleID
  * @param ticketCategoryID
  * @param ticketEmbed
  *
  * @returns new channel
  */
-exports.ticket = function (message, guild, ticketUser, maxTickets, supportRoleID, ticketCategoryID, ticketEmbed) {
+exports.ticket = function (message, guild, ticketUser, supportRoleID, ticketCategoryID, ticketEmbed) {
     guild.createChannel('Support - ' + ticketUser.username, 'text', [{
         id: ticketUser.id,
         allow: ['READ_MESSAGES', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'ATTACH_FILES'],
@@ -25,6 +24,7 @@ exports.ticket = function (message, guild, ticketUser, maxTickets, supportRoleID
         message.reply(`support ticket created ${channel}`);
         let category = guild.channels.find(c => c.id === ticketCategoryID && c.type === "category");
         if (category) {
+            channel.send(ticketEmbed).catch(console.error);
             channel.setParent(ticketCategoryID).catch(console.error);
             guildSettings.findOne({
                 id: guild.id
@@ -39,7 +39,6 @@ exports.ticket = function (message, guild, ticketUser, maxTickets, supportRoleID
         } else {
             message.reply('No ticket category is set!');
         }
-        channel.send(ticketEmbed).catch(console.error);
     }).catch(console.error);
 };
 
