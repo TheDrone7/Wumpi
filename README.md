@@ -20,7 +20,7 @@ Bot Only Channels
 Automated Slow mode
 Moderation Commands(Ban,Kick,Mute)
 Unban All
-More coming soon!
+More coming soon
 
 Members:
 Alex - Dev 
