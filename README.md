@@ -38,7 +38,7 @@ https://trello.com/b/CaDseHu8
 Discord:
 https://discord.gg/mPPBNty
 
-Panel
+Panel:
 https://www.wumpi.xyz/dashboard
 
 ## Setup (Invite Bot/Normal)
