@@ -41,12 +41,12 @@ https://discord.gg/mPPBNty
 Panel
 https://www.wumpi.xyz/dashboard
 
-##Setup (Invite Bot/Normal)
+## Setup (Invite Bot/Normal)
 - Invite Bot with [Invite Link](https://discordapp.com/oauth2/authorize?client_id=592568340485111827&permissions=8&scope=bot)
 - Use [Web Pane](https://www.wumpi.xyz/dashboard)
 
-##Setup (Self Host)
-- Configure Config.json Provided (How to set up bot and get Bot Token/Client ID: Wumpi/BotTokenAndID.md)
+## Setup (Self Host)
+- Configure Config.json Provided ([How to set up bot and get Bot Token/Client ID](https://github.com/alex5219/Wumpi/blob/master/BotTokenAndID.md/))
 - Install Required Modules using `npm install`
 - Use `npm start` to start bot
 
