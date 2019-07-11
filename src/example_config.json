@@ -1,0 +1,8 @@
+{
+  "bot_token": "Insert Discord Bot Token Here",
+  "client_id": "Insert Bot Client ID Here",
+  "bot_oath": "Insert Bot Oauth URL Here",
+  "cleverbot_key": "Cleverbot API Key Here",
+  "default_prefix": "-",
+  "db_url": "mongodb://IP:Port/Wumpi"
+}
