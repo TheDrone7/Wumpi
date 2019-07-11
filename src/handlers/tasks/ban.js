@@ -16,10 +16,11 @@ module.exports = {
      * returns channel message {Discord.RichEmbed}
      * returns dm{Discord.RichEmbed}
      * */
-    execute(message, args) {
+    execute(client, message, args) {
         if (!message.mentions.users.size)
             return message.reply('You need to tag a user to ban them.');
         const taggedUser = message.mentions.users.first();
+        if (!taggedUser) return message.channel.send('You didnt tag a user!');
         const reason = args.slice(1).join(" ");
         let banEmbed = new Discord.RichEmbed()
             .setTimestamp()

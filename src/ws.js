@@ -7,18 +7,19 @@ const OAuth = require('disco-oauth');
 const mongoose = require('mongoose');
 const {RichEmbed} = require('discord.js');
 const guildSchema = require('./lib/guilddb');
+const fs = require('fs');
 const {bot_oath, db_url, client_id} = require('./config.json');
 const OAuth2 = new OAuth(client_id, bot_oath);
 OAuth2.setScopes(["identify", "guilds"]);
-OAuth2.setRedirect("http://144.76.238.108:3000/overview");
+OAuth2.setRedirect("https://wumpi-github.glitch.me/overview");
 const BotInv = new OAuth(client_id, bot_oath);
 BotInv.setScopes(["bot"]);
-BotInv.setRedirect("http://144.76.238.108:3000/overview");
+BotInv.setRedirect("https://wumpi-github.glitch.me/overview");
 
 class WebSocket {
     constructor(client) {
         this.Client = client;
-        mongoose.connect(db_url, {useNewUrlParser: true}, (err) => {
+        mongoose.connect(db_url, {useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true}, (err) => {
             if (err) return console.error(err);
             console.log('Connected to MongoDB.');
         }).catch();

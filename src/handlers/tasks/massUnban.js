@@ -6,7 +6,7 @@ module.exports = {
     cooldown: 60,
     aliases: ['unban all', 'unbanall', 'mass unban'],
     usage: '[command name]',
-    async execute(message, args) {
+    async execute(client, message, args) {
         let guild = message.guild;
         guild.fetchBans().then(bans => {
             bans.array().forEach(b => {

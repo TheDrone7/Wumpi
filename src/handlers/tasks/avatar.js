@@ -9,8 +9,9 @@ module.exports = {
     usage: '[command name] @User',
     args: true,
     guildOnly: true,
-    execute(message, args) {
+    execute(client, message, args) {
         const taggedUser = message.mentions.users.first();
-        message.channel.send(taggedUser.avatarURL);
+        if (!taggedUser) return;
+        message.author.send(taggedUser.avatarURL);
     }
 };

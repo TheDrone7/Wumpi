@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const botUsers = mongoose.Schema({
     userID: String,
+    guildId: String,
     username: String,
     code: String,
     checked: Boolean,

@@ -11,7 +11,7 @@ module.exports = {
      * @param message
      * @param args
      */
-    execute(message, args) {
+    execute(client, message, args) {
         if (message.channel.nsfw) {
             message.channel.setNSFW(false, 'Automatic.');
             message.reply('NSFW turned off in ' + message.channel.name + '.')

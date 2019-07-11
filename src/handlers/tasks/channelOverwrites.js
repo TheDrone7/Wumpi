@@ -10,7 +10,7 @@ module.exports = {
     cooldown: 25,
     aliases: ['save'],
     usage: '[command name] "Reason"',
-    execute(message, args) {
+    execute(client, message, args) {
         maintenanceHandler.maintenanceSaveOverwrites(message);
     }
 };

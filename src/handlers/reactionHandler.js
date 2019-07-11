@@ -1,4 +1,4 @@
-const {client} = require('../wumpi.js');
+const client = require('../wumpi.js');
 
 /**
  * Called whenever a reaction is added to a message.

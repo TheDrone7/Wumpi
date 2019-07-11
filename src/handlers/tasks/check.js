@@ -7,7 +7,7 @@ module.exports = {
     aliases: ['captcha', 'antibot'],
     permissionsRequired: ['READ_MESSAGES'],
     usage: '[command name]',
-    execute(message, args) {
+    execute(client, message, args) {
 
     }
 };

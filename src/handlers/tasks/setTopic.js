@@ -9,7 +9,7 @@ module.exports = {
     args: true,
     aliases: ['topic', 'set topic'],
     usage: '[command name] "Topic"',
-    async execute(message, args) {
+    async execute(client, message, args) {
         const currentGuildID = message.guild.id;
         let topic = args.slice(0).join(" ");
         guildSettings.findOne({

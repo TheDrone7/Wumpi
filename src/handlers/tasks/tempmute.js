@@ -10,8 +10,8 @@ module.exports = {
     permissionsRequired: ['MANAGE_CHANNELS'],
     aliases: ['tmute', 'tm'],
     args: true,
-    usage: '"user" "duration" "reason"',
-    execute(client, message, args) {
+    usage: '@user "duration" "reason"',
+    async execute(client, message, args) {
         let toMute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
         if (!toMute) return message.reply("Missing arguments! `-tempmute 'user' 'duration' 'reason'`");
 
@@ -20,19 +20,19 @@ module.exports = {
         let muteRole = message.guild.roles.find(r => r.name === "muted");
         if (!muteRole) {
             try {
-                muteRole = message.guild.createRole({
+                muteRole = await message.guild.createRole({
                     name: "muted",
                     color: "#000000",
                     permissions: []
                 });
                 message.guild.channels.forEach(async (channel) => {
                     await channel.overwritePermissions(muteRole, {
-                        SEND_MESSAGES: false,
-                        ADD_REACTIONS: false
+                        "SEND_MESSAGES": false,
+                        "ADD_REACTIONS": false
                     });
                 });
             } catch (e) {
-                console.log(e.stack);
+                console.log(e);
             }
         }
 
@@ -84,7 +84,7 @@ module.exports = {
                         //console.log("get user")
                         if (reports[i][0].end - Date.now() > 0) {
                             console.log((reports[i][0].end - Date.now() > 0) === false);
-                            return message.channel.send("This user still have an active mute!")
+                            return message.channel.send("This user still has an active mute!")
                         }
                     }
                 }

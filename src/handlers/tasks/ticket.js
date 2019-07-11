@@ -9,7 +9,7 @@ module.exports = {
     aliases: ['new', 'support'],
     permissionsRequired: ['READ_MESSAGES'],
     usage: '[command name] "User" "Topic"',
-    execute(message, args) {
+    execute(client, message, args) {
         let guild = message.channel.guild;
         let topic = args.slice(0).join(" ");
         let currentGuild = message.channel.guild;

@@ -9,7 +9,7 @@ module.exports = {
     args: true,
     aliases: ['prefix'],
     usage: '[command name] "Prefix"',
-    async execute(message, args) {
+    async execute(client, message, args) {
         const currentGuildID = message.guild.id;
         const newPrefix = args[0];
         if (1 < newPrefix.size < 5) {

@@ -11,7 +11,7 @@ module.exports = {
      * @param message
      * @param args
      */
-    execute(message, args) {
+    execute(client, message, args) {
         message.channel.setRateLimitPerUser(args[0], 'Automatic').catch();
         message.reply('Set rate limit for channel to ' + args[0]);
     }

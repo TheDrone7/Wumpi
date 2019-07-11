@@ -5,30 +5,39 @@ module.exports = {
     description: 'Change the servers set ticket category.',
     guildOnly: true,
     permissionsRequired: ['ADMINISTRATOR'],
-    cooldown: 60,
+    cooldown: 30,
     args: true,
     aliases: ['set support', 'supportteam', 'set support role'],
     usage: '[command name] "Category ID"',
-    async execute(message, args) {
+    async execute(client, message, args) {
         const currentGuildID = message.guild.id;
         const newRole = args[0];
         guildSettings.findOne({
             id: currentGuildID
         }, (err, g) => {
-            if (err) {
-                console.error(err);
+            if (err) return console.log(err);
+            var role = message.guild.roles.find(r => r.name.toLowerCase() === newRole.toLowerCase());
+            if (!role) {
+                role = message.guild.roles.find(r => r.id === newRole);
             }
-            message.guild.roles.forEach(r => {
-                if (r.name === newRole) {
-                    g.variables.supportRoleID = newRole.id;
-                    return g.save();
-                }
-                if (r.id === newRole) {
-                    g.variables.supportRoleID = newRole;
-                    return g.save();
-                }
+
+            if (!role) return message.channel.send('Wasnt able to find that role!');
+
+            if (role.id === g.variables.supportRoleID) return message.channel.send('That role is already set as support role!');
+
+            var previousRole = message.guild.roles.find(r => r.id === g.variables.supportRoleID);
+            g.variables.supportRoleID = role.id;
+
+            guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
+                if (err) throw err;
+                console.log('saved');
             });
+
+            if (!previousRole) {
+                message.channel.send('I have set the support role to `' + role.name + '`');
+            } else {
+                message.channel.send('I have set the support role from `' + previousRole.name + '` to `' + role.name + '`');
+            }
         });
-        message.reply('I\'ve set the support role to `' + newRole + '`');
     }
 };

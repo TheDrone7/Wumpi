@@ -4,7 +4,7 @@ module.exports = {
     name: 'textonly',
     description: 'Set your channel to text only mode. Prevents bots from talking in this channel.',
     guildOnly: true,
-    cooldown: 60,
+    cooldown: 30,
     permissionsRequired: ['ADMINISTRATOR'],
     aliases: ['text', 'set channel text'],
     args: false,
@@ -13,34 +13,47 @@ module.exports = {
      * @param message
      * @param args
      */
-    execute(message, args) {
+    execute(client, message, args) {
         const currentGuildID = message.guild.id;
         const currentChannel = message.channel.id;
         guildSettings.findOne({
             id: currentGuildID
         }, (err, g) => {
-            if (err) {
-                console.error(err);
-            }
+            if (err) return console.log(err);
+
+            var isBotOnly = g.channels.botOnlyChannelIDs.find(c => c === currentChannel);
+            if (isBotOnly) return message.channel.send('This channel is already set to "Bot only"');
+            var isImageOnly = g.channels.imageOnlyChannelIDs.find(c => c === currentChannel);
+            if (isImageOnly) return message.channel.send('This channel is already set to "Images only"');
+          
             if (g.channels.userOnlyChannelIDs.length === 0) {
-                g.channels.userOnlyChannelIDs = [currentChannel];
-                g.save();
+                g.channels.userOnlyChannelIDs.push(currentChannel);
+                guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
+                    if (err) throw err;
+                });
                 message.reply('Added `text-only` to `' + message.channel.name + '`.');
                 console.log('Added textonly to ' + message.channel.name);
             } else {
-                g.channels.userOnlyChannelIDs.forEach(c => {
-                    if (c === currentChannel) {
-                        g.channels.userOnlyChannelIDs = g.channels.userOnlyChannelIDs.remove(currentChannel);
-                        g.save();
+                var ChannelIds = g.channels.userOnlyChannelIDs;
+                for (var i = 0; i < ChannelIds.length; i++) {
+                    if (ChannelIds[i] === currentChannel) {
+                        g.channels.userOnlyChannelIDs.splice(i, 1);
+                        guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
+                            if (err) throw err;
+                        });
                         message.reply('Removed `text-only` from `' + message.channel.name + '`.');
                         console.log('Removed text-only from ' + message.channel.name);
-                    } else {
-                        g.userOnlyChannelIDs = g.userOnlyChannelIDs.push(currentChannel);
-                        g.save();
+                        break;
+                    } else if (i === ChannelIds.length - 1) {
+                        g.channels.userOnlyChannelIDs.push(currentChannel);
+                        guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
+                            if (err) throw err;
+                        });
                         message.reply('Added `text-only` to `' + message.channel.name + '`.');
                         console.log('Added text-only to ' + message.channel.name);
+                        break;
                     }
-                });
+                }
             }
         });
     }

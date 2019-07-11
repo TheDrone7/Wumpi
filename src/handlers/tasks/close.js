@@ -13,7 +13,7 @@ module.exports = {
      * @param message
      * @param args
      */
-    execute: function (message, args) {
+    execute: function (client, message, args) {
         let guild = message.channel.guild;
         let reason = args.slice(0).join(" ");
         let currentGuild = message.channel.guild;

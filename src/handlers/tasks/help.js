@@ -1,13 +1,13 @@
 const Discord = require("discord.js");
 const guildSettings = require('../../lib/guilddb');
 const ticketHandler = require('../ticketHandler.js');
-const {client} = require('../../wumpi.js');
+//const {client} = require('../../wumpi.js');
 module.exports = {
     name: 'help',
     description: 'List all of my commands or info about a specific command.',
     aliases: ['commands', 'cmds'],
     usage: '[command name]',
-    cooldown: 15,
+    cooldown: 10,
     /**
      * Help message, displays all commands
      *
@@ -15,12 +15,12 @@ module.exports = {
      * @param args
      * @returns {*}
      */
-    execute(message, args) {
+    execute(client, message, args) {
         let helpEmbed = new Discord.RichEmbed()
             .setTitle('Commands')
             .setTimestamp()
             .setColor(0x02fc62)
-            .setThumbnail(client.displayAvatarURL)
+            .setThumbnail(client.user.displayAvatarURL)
             .setDescription(
                 '-help Lists all of my commands\n' +
                 '-about Leaves you an about page, about me!\n' +
@@ -41,7 +41,17 @@ module.exports = {
                 '-imageonly Makes the channel image only\n' +
                 '-slowmode Turns on slow mode for the channel\n' +
                 '-back Backs up the entire discord\n');
-        message.delete(2000);
-        message.author.send(helpEmbed).catch();
-    },
+
+        message.author.send("loading...")
+            .catch((e) => {
+                if (e) return console.log(e);
+            }).then(msg => {
+            message.delete()
+                .then(() => console.log('deleted message'))
+                .catch(e => console.log(e));
+            msg.edit(helpEmbed).then((edited) => {
+                console.log('working');
+            }).catch((e) => console.log(e));
+        })
+    }
 };

@@ -1,5 +1,5 @@
 const {default_prefix} = require('../config.json');
-const {client} = require('../wumpi.js');
+const client = require('../wumpi.js');
 const guildSettings = require('../lib/guilddb');
 
 client.on('ready', async () => {

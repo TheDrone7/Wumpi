@@ -9,7 +9,7 @@ module.exports = {
     cooldown: 25,
     aliases: ['lockdown'],
     usage: '[command name] "Reason"',
-    execute(message, args) {
+    execute(client, message, args) {
         let maintenanceMessage = 'Default maintenance message.\nETA: 30 minutes';
         if (args.length)
             maintenanceMessage = args.slice(0).join(" ");

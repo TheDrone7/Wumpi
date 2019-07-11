@@ -13,20 +13,21 @@ module.exports = {
      *
      * returns dm {Discord.RichEmbed}
      * */
-    execute(message, args) {
+    execute(client, message, args) {
         let aboutEmbed = new Discord.RichEmbed()
             .setTitle('About Me')
-            .setTimestamp()
+            .setTimestamp(new Date())
             .setColor(0x02f2e6)
             .setThumbnail('https://i.imgur.com/RBF518F.jpg')
             .setDescription('Moderation bot');
-        return message.author.send(aboutEmbed)
-            .then(() => {
+
+        message.author.send(aboutEmbed)
+            .then((msg) => {
                 if (message.channel.type === 'dm') return;
-                message.reply('I sent you a dm!');
+                message.channel.send('I sent you a dm!');
             })
             .catch(error => {
-                console.error(`Failed to send help DM to ${message.author.tag}.\n`, error);
+                console.error(`Failed to send help DM to ${message.user.username}\n`, error);
                 message.reply('I\'m unable to dm you ;(');
             });
     },
