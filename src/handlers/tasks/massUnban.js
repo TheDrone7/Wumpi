@@ -8,12 +8,13 @@ module.exports = {
     usage: '[command name]',
     async execute(client, message, args) {
         let guild = message.guild;
-        guild.fetchBans().then(bans => {
-            bans.array().forEach(b => {
-                guild.unban(b).catch();
-                console.log('Unbanned: ' + b.username);
-                message.reply('Unbanned all users!')
-            })
-        })
+        guild.fetchBans()
+        .then(bans => {
+            bans.forEach(b => {
+                guild.unban(b.user).catch(e => console.log(e));
+                console.log('Unbanned: ' + b.user.username);
+            });
+            message.channel.send('Unbanned all users!').catch(e => console.log(e));
+        }).catch(e => console.log(e));
     }
 };

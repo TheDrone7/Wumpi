@@ -18,7 +18,7 @@ module.exports = {
             return message.reply('You need to tag a user to kick them.');
         }
         const taggedUser = message.mentions.users.first();
-        if (!taggedUser) return message.channel.send('You didnt tag a user!');
+        if(!taggedUser) return message.channel.send('You didnt tag a user!');
         const reason = args.slice(1).join(" ");
         let kickEmbed = new Discord.RichEmbed()
             .setTimestamp()

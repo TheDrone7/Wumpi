@@ -25,8 +25,8 @@ module.exports = {
             let ticketCategoryID = g.channels.ticketCategoryID;
             let reasonEmbed = new Discord.RichEmbed()
                 .setTitle('Ticket Closed')
-                .setTimestamp()
-                .setColor(0x02fc62)
+                .setTimestamp(new Date())
+                .setColor("0x02fc62")
                 .setThumbnail(message.author.displayAvatarURL)
                 .setDescription(
                     'Ticket ' + message.channel.name + ' was closed by user ' + message.author.username + '.'
@@ -36,7 +36,7 @@ module.exports = {
             if (ticketCategoryID === message.channel.parentID) {
                 ticketHandler.close(guild, message.channel, reasonEmbed, g.channels.ticketLogChannelID);
             } else {
-                message.reply('You need to run this command in a ticket channel!');
+                message.channel.send('You need to run this command in a ticket channel!');
             }
         });
     },

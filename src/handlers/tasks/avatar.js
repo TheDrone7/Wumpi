@@ -11,7 +11,7 @@ module.exports = {
     guildOnly: true,
     execute(client, message, args) {
         const taggedUser = message.mentions.users.first();
-        if (!taggedUser) return;
+        if(!taggedUser) return;
         message.author.send(taggedUser.avatarURL);
     }
 };

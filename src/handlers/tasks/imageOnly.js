@@ -20,7 +20,7 @@ module.exports = {
             id: currentGuildID
         }, (err, g) => {
             if (err) return console.log(err);
-
+          
             var isBotOnly = g.channels.botOnlyChannelIDs.find(c => c === currentChannel);
             if (isBotOnly) return message.channel.send('This channel is already set to "Bot only"');
             var isUserOnly = g.channels.userOnlyChannelIDs.find(c => c === currentChannel);
@@ -29,26 +29,26 @@ module.exports = {
             if (g.imageOnlyChannelIDs.length === 0) {
                 g.imageOnlyChannelIDs.push(currentChannel);
                 guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
-                    if (err) throw err;
-                });
+                  if(err) throw err;
+                })
                 message.reply('Added `image-only` to `' + message.channel.name + '`.');
                 console.log('Added image-only to ' + message.channel.name);
             } else {
                 var ImageOnlyChannels = g.channels.imageOnlyChannelIDs;
-                for (var i = 0; i < ImageOnlyChannels.length; i++) {
+                for(var i = 0; i < ImageOnlyChannels.length; i++) {
                     if (ImageOnlyChannels[i] === currentChannel) {
                         g.channels.imageOnlyChannelIDs.splice(i, 1);
                         guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
-                            if (err) throw err;
-                        });
+                          if(err) throw err;
+                        })
                         message.reply('Removed `bot-only` from `' + message.channel.name + '`.');
                         console.log('Removed bot-only from ' + message.channel.name);
                         break;
-                    } else if (i === ImageOnlyChannels.length - 1) {
+                    } else if(i === ImageOnlyChannels.length - 1) {
                         g.channels.imageOnlyChannelIDs.push(currentChannel);
                         guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
-                            if (err) throw err;
-                        });
+                          if(err) throw err;
+                        })
                         message.reply('Added `image-only` to `' + message.channel.name + '`.');
                         console.log('Added image-only to ' + message.channel.name);
                         break;

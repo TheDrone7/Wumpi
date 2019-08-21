@@ -16,42 +16,41 @@ module.exports = {
      * @returns {*}
      */
     execute(client, message, args) {
-        let helpEmbed = new Discord.RichEmbed()
-            .setTitle('Commands')
-            .setTimestamp()
-            .setColor(0x02fc62)
+      
+        var helpEmbed = new Discord.RichEmbed()
+            .setTitle('All commands of Wumpi')
+            .setAuthor(message.author.username, message.author.avatarURL)
+            .setTimestamp(new Date())
+            .setColor("0x02fc62")
             .setThumbnail(client.user.displayAvatarURL)
-            .setDescription(
-                '-help Lists all of my commands\n' +
-                '-about Leaves you an about page, about me!\n' +
-                '-avatar Gets the avatar of your user\n' +
-                '-ban Bans the user you mention\n' +
-                '-new Creates a support ticket\n' +
-                '-close Closes a support ticket\n' +
-                '-setcategory Sets the category for support tickets\n' +
-                '-setprefix Sets my bot prefix\n' +
-                '-settopic Sets a tickets topic\n' +
-                '-setticketlog Sets the log channel for tickets\n' +
-                '-supportrole Sets the support role for tickets\n' +
-                '-prune Purges channels\n' +
-                '-mute Mutes the user selected\n' +
-                '-massunban Unbans all users in the discord\n' +
-                '-nsfw Turns on NSFW in the channel\n' +
-                '-textonly Makes the channel text only\n' +
-                '-imageonly Makes the channel image only\n' +
-                '-slowmode Turns on slow mode for the channel\n' +
-                '-back Backs up the entire discord\n');
+            .setDescription("If you want to learn more about 'Wumpi', check out our [Discord](https://discord.gg/fbkygd 'Discord server') or head over to its [Github](https://github.com/alex5219/Wumpi 'Github') to understand it better!")
+            .addField('Member management', 
+            "__-avatar @User__\nSends you the avatar\n\n__-ban @User 'Reason'__\nBans the tagged user\n\n__-mute @User 'Reason'__\nMutes the tagged user\n\n__-kick @User 'Reason'__\nKicks the tagged user",
+            true)
+            .addField('Support',
+            "__-new__\nCreates support ticket\n\n__-close__\nCloses a support ticket\n\n__-settopic 'topic'__\nSets a ticket topic\n\n__-setcategory 'Category'__\nSets category for support tickets",
+            true)
+            .addField("Guild settings", 
+            "__-setprefix 'prefix'__\nSets the bot prefix for your guild\n\n__-setticketlog 'Channel'__\nSets the log channel for tickets\n\n__-supportrole 'Role'__\nSets support role for tickets\n\n__-backup__\nInitializes backup of your guild\n\n__-load 'key'__\nBackups up your entire guild",
+            true)
+            .addField("Guild management", 
+            "__-clear 'count'__\nClears channel\n\n__-massunban__\nUnbans all users\n\n__-lockdown__\nLocks down the server for maintenance",
+            true)
+            .addField("Channel management", 
+            "__-slowmode 'time'__\nTurns on/off slowmode\n\n__-imageonly__\nMakes channel image only\n\n__-textonly__\nMakes channel text only\n\n__-botonly__\nMakes channel bot only\n\n__-nsfw__\nTurns on/off NSFW",
+            true)
+            .addField("Extra", 
+            "__-help__\nList of all commands\n\n__-about__\nSends an 'about me' page",
+            true)
+            .setFooter('-- @help message', client.user.avatarURL);
 
         message.author.send("loading...")
-            .catch((e) => {
-                if (e) return console.log(e);
-            }).then(msg => {
+        .catch((e) => {
+            if(e) return console.log(e);
+        }).then(msg => {
             message.delete()
-                .then(() => console.log('deleted message'))
-                .catch(e => console.log(e));
-            msg.edit(helpEmbed).then((edited) => {
-                console.log('working');
-            }).catch((e) => console.log(e));
+            .catch(e => console.log(e));
+            msg.edit(helpEmbed).catch((e) => console.log(e));
         })
     }
 };

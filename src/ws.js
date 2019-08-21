@@ -19,7 +19,7 @@ BotInv.setRedirect("https://wumpi-github.glitch.me/overview");
 class WebSocket {
     constructor(client) {
         this.Client = client;
-        mongoose.connect(db_url, {useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true}, (err) => {
+        mongoose.connect(db_url, {useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true }, (err) => {
             if (err) return console.error(err);
             console.log('Connected to MongoDB.');
         }).catch();
@@ -68,7 +68,7 @@ class WebSocket {
             let userkey;
             if (key !== undefined) {
                 if (!(req.cookies.get('key'))) {
-                    console.log('Got key!');
+                    // console.log('Got key!');
                     userkey = await OAuth2.getAccess(key);
                     res.cookie('key', userkey);
                 }
@@ -142,16 +142,16 @@ class WebSocket {
         });
         this.app.post('/setGuild', (req, res) => {
             let guildId = req.body.selectedGuild;
-            console.log('set and redirect!');
+            // console.log('set and redirect!');
             guildSchema.findOne({id: guildId}, (err, result) => {
                 if (err) throw err;
                 console.log(result);
                 if (result) {
-                    console.log('Saved settings');
+                    // console.log('Saved settings');
                     this.MyGuildSettings = result;
                     this.MyGuildSettings.save();
                 }
-                console.log('Works');
+                // console.log('Works');
                 res.cookie('guildId', guildId);
                 res.redirect(req.get('referer'));
             });
@@ -160,6 +160,7 @@ class WebSocket {
             let key = req.cookies.get('key');
             let user = await OAuth2.getAuthorizedUser(key);
             let guildId = req.cookies.get('guildId');
+            if(!guildId) return; 
             if (!guildId) res.redirect('/overview');
             let temp = this.Client.guilds.get(guildId).channels.array().filter(c => c.type === "text");
             let cat = this.Client.guilds.get(guildId).channels.array().filter(c => c.type === "category");
@@ -369,7 +370,7 @@ class WebSocket {
                 this.MyGuildSettings.channels.botOnlyChannelIDs = SetToNone(ActionId, this.MyGuildSettings.channels.botOnlyChannelIDs);
             }
         }
-        console.log(this.MyGuildSettings);
+        // console.log(this.MyGuildSettings);
         this.MyGuildSettings.save();
     }
 
@@ -377,14 +378,14 @@ class WebSocket {
         this.MyGuildSettings.variables.prefix = Prefix ? Prefix : this.MyGuildSettings.variables.prefix;
         this.MyGuildSettings.variables.ticketGreetingMessage = Greetings ? Greetings : this.MyGuildSettings.variables.ticketGreetingMessage;
         this.MyGuildSettings.variables.filtered_words = FilteredWords ? FilteredWords : this.MyGuildSettings.variables.filtered_words;
-        console.log(this.MyGuildSettings);
+        // console.log(this.MyGuildSettings);
         this.MyGuildSettings.save();
     }
 
     UpdateDataBase_Category(ActionId, isMain, isTicket) {
         this.MyGuildSettings.channels.ticketCategoryID = isTicket && this.MyGuildSettings.channels.maintenanceCategoryID !== ActionId ? ActionId : null;
         this.MyGuildSettings.channels.maintenanceCategoryID = isMain ? ActionId && this.MyGuildSettings.channels.ticketCategoryID !== ActionId : null;
-        console.log(this.MyGuildSettings);
+        // console.log(this.MyGuildSettings);
         this.MyGuildSettings.save();
     }
 
@@ -397,7 +398,7 @@ class WebSocket {
         this.MyGuildSettings.values.isMusicEnabled = isMusicEnabled;
         this.MyGuildSettings.values.isSupportTicketsEnabled = isSupportTicketsEnabled;
         this.MyGuildSettings.values.isInviteTrackerEnabled = isInviteTrackerEnabled;
-        console.log(this.MyGuildSettings);
+        // console.log(this.MyGuildSettings);
         this.MyGuildSettings.save();
     }
 
@@ -425,7 +426,7 @@ class WebSocket {
 
     GenerateChannelSettings(AddOthers, type) {
         let guildObject = this.MyGuildSettings.toObject();
-        console.log(this.MyGuildSettings);
+        // console.log(this.MyGuildSettings);
         if (type != null) {
             if (type === "channel") {
                 let channels = AddOthers.array();

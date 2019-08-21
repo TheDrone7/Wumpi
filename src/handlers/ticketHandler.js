@@ -10,17 +10,22 @@
  *
  * @returns new channel
  */
+
+const guildSettings = require('../lib/guilddb.js');
+
 exports.ticket = function (message, guild, ticketUser, supportRoleID, ticketCategoryID, ticketEmbed) {
-    guild.createChannel('Support - ' + ticketUser.username, 'text', [{
+    guild.createChannel(`Support-${message.author.username}`, {
+      type: "text",
+      permissions: [{
         id: ticketUser.id,
         allow: ['READ_MESSAGES', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'ATTACH_FILES'],
-    }, {
+       }, {
         id: supportRoleID,
         allow: ['READ_MESSAGES', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'ATTACH_FILES'],
-    }, {
+       }, {
         id: guild.defaultRole.id,
         deny: ['READ_MESSAGES', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'ATTACH_FILES'],
-    }]).then(channel => {
+      }]}).then(channel => {
         message.reply(`support ticket created ${channel}`);
         let category = guild.channels.find(c => c.id === ticketCategoryID && c.type === "category");
         if (category) {

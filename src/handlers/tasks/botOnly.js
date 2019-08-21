@@ -20,7 +20,7 @@ module.exports = {
             id: currentGuildID
         }, (err, g) => {
             if (err) return console.log(err);
-
+          
             var isImageOnly = g.channels.imageOnlyChannelIDs.find(c => c === currentChannel);
             if (isImageOnly) return message.channel.send('This channel is already set to "Images only"');
             var isUserOnly = g.channels.userOnlyChannelIDs.find(c => c === currentChannel);
@@ -29,17 +29,17 @@ module.exports = {
             if (g.channels.botOnlyChannelIDs.length === 0) {
                 g.channels.botOnlyChannelIDs.push(currentChannel);
                 guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
-                    if (err) throw err;
-                });
+                  if(err) throw err;
+                })
                 message.reply('Added `bot-only` to `' + message.channel.name + '`.');
                 console.log('Added bot-only to ' + message.channel.name);
             } else {
                 var BotChannels = g.channels.botOnlyChannelIDs;
-                for (var i = 0; i < BotChannels.length; i++) {
+                for(var i = 0; i < BotChannels.length; i++) {
                     if (BotChannels[i] === currentChannel) {
                         g.channels.botOnlyChannelIDs.splice(i, 1);
                         guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
-                            if (err) throw err;
+                          if(err) throw err;
                         });
                         message.reply('Removed `bot-only` from `' + message.channel.name + '`.');
                         console.log('Removed bot-only from ' + message.channel.name);
@@ -47,7 +47,7 @@ module.exports = {
                     } else if (i === BotChannels.length - 1) {
                         g.channels.botOnlyChannelIDs.push(currentChannel);
                         guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
-                            if (err) throw err;
+                          if(err) throw err;
                         });
                         message.reply('Added `bot-only` to `' + message.channel.name + '`.');
                         console.log('Added bot-only to ' + message.channel.name);

@@ -1,6 +1,6 @@
 const fs = require("fs");
 module.exports = (client) => {
-    fs.readdir("./handlers/", (err, files) => {
+    fs.readdir("/app/src/handlers/", (err, files) => {
         if (err) console.error(err);
         let handlers = files.filter(f => f.split(".").pop() === "js");
         if (handlers.length <= 0) return console.log("There are no events to load...");

@@ -5,6 +5,8 @@ const client = require('../wumpi.js');
 const guildSettings = require('../lib/guilddb');
 const Collection = new Discord.Collection();
 const MessageHandler = require('./messageHandler.js');
+const ms = require('ms');
+const { AddXP } = require('./rankHandler');
 /* Dynamic storing of commands.*/
 const commandFiles = fs.readdirSync('/app/src/handlers/tasks/').filter(file => file.endsWith('.js'));
 
@@ -22,6 +24,7 @@ for (const file of commandFiles) {
 /** Cooldown collection */
 const cooldowns = new Discord.Collection();
 
+
 client.on('message', async message => {
     if (message.channel.type !== "dm") {
         let currentGuildID = message.channel.guild.id;
@@ -29,23 +32,29 @@ client.on('message', async message => {
             id: currentGuildID
         }, (err, guild) => {
             if (err) console.error(err);
+            
+          if(!message.author.bot) {
+            AddXP(message);
+          }
+          
             var code = CheckChannelType(message, guild, client);
+
             if (message.content.startsWith(guild.variables.prefix)) {
                 if (err) return console.error(err);
                 const args = message.content.slice(guild.variables.prefix.length).split(' '[0]);
                 const commandName = args.shift().toLowerCase();
-
-                if (code === 1) {
-                    if (commandName !== "textonly") {
-                        message.channel.send(`You cant use commands here, besides 'textonly', because its a user channel!`)
-                            .then((msg) => msg.delete(5000))
-                            .catch(e => console.log(e));
-
-                        message.delete().catch(e => console.log(e));
-                    }
+                
+                if(code === 1) {
+                  if(commandName !== "textonly") {
+                    message.channel.send(`You cant use commands here, besides 'textonly', because its a user channel!`)
+                    .then((msg) => msg.delete(5000))
+                    .catch(e => console.log(e));
+                    
+                    message.delete().catch(e => console.log(e));
+                  }
                 } else if (code === 2)
-                    return console.log('image only');
-
+                  return console.log('image only');
+              
                 const command = Collection.get(commandName)
                     || Collection.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
@@ -54,7 +63,7 @@ client.on('message', async message => {
                 if (command.permissionsRequired && !(message.channel.type === "dm")) {
                     let permissions = new Permissions(command.permissionsRequired);
                     if (!message.member.hasPermission(permissions)) {
-                        return message.reply('You don\'t have enough permissions to run that command! You need permissions `' + permissions.toArray() + '` to run that command.');
+                        return message.reply('You don\'t have enough permissions to run that command! You need permissions `' + permissions + '` to run that command.');
                     }
                 }
 
@@ -101,77 +110,90 @@ client.on('message', async message => {
             }
         });
     } else if (message.channel.type === "dm") {
-        MessageHandler(message);
+      MessageHandler(message);
     }
 });
 
+client.on("ready", () => {
+  setInterval(() => {
+    var count = 0;
+    var default_prefix = "-"
+    var command = Collection.array()[Math.floor(Math.random() * Collection.array().length)];
+    client.guilds.forEach(guild => {
+      count += guild.memberCount;
+    })
+    client.user.setActivity(count + ' Users | ' + default_prefix + command.name, {type: 'LISTENING'}).catch(console.error());
+  }, 20000)
+})
+
 function CheckChannelType(message, guildOptions) {
-    //we need to require it each call, otherwise the client returns null, because we export it as null (its not logged in)
-    if (message.author.id === client.user.id)
-        return;
-
-    var isImageChannel = guildOptions.channels.imageOnlyChannelIDs.find(c => c === message.channel.id);
-    if (isImageChannel) {
-        var cont = message.content;
-
-        if (!cont.includes('.jpg') && !cont.includes('.jpeg') && !cont.includes('.png') && !cont.includes('.gif') && !cont.includes('https')) {
-
-            if (message.attachments.array().length <= 0) {
-                message.channel.send('This is an image only channel, you must use an url which redirects the user to an image or attach an image file!').then((msg) => {
-                    msg.delete(5000);
-                }).catch(e => console.log(e));
-                message.delete().catch(e => console.log(e));
-
-            } else if (message.attachments.array().length > 0) {
-
-                var WRONG_FILE_FORMAT = false;
-                message.attachments.forEach(attachment => {
-                    var cont = attachment.filename;
-                    if (!cont.includes('.jpg') && !cont.includes('.jpeg') && !cont.includes('.png') && !cont.includes('.gif'))
-                        WRONG_FILE_FORMAT = true;
-                });
-
-                if (WRONG_FILE_FORMAT) {
-                    message.channel.send('One of your attached files isnt a image file').then((msg) => {
-                        msg.delete(5000);
-                    }).catch(e => console.log(e));
-                    message.delete().catch(e => console.log(e));
-
-                }
-            }
+  if(!guildOptions) return;
+  //we need to require it each call, otherwise the client returns null, because we export it as null (its not logged in)
+  if(message.author.id === client.user.id)
+    return;
+  
+  var isImageChannel = guildOptions.channels.imageOnlyChannelIDs.find(c => c === message.channel.id);
+  if(isImageChannel) {
+    var cont = message.content;
+    
+    if(!cont.includes('.jpg') && !cont.includes('.jpeg') && !cont.includes('.png') && !cont.includes('.gif') && !cont.includes('https')) {
+      
+      if(message.attachments.array().length <= 0) {
+        message.channel.send('This is an image only channel, you must use an url which redirects the user to an image or attach an image file!').then((msg) => { 
+          msg.delete(5000);
+        }).catch(e => console.log(e));
+        message.delete().catch(e => console.log(e));
+        
+      } else if (message.attachments.array().length > 0) {
+        
+        var WRONG_FILE_FORMAT = false;
+        message.attachments.forEach(attachment => {
+          var cont = attachment.filename;
+          if(!cont.includes('.jpg') && !cont.includes('.jpeg') && !cont.includes('.png') && !cont.includes('.gif'))
+            WRONG_FILE_FORMAT = true;
+        });
+        
+        if(WRONG_FILE_FORMAT) {
+          message.channel.send('One of your attached files isnt a image file').then((msg) => {
+            msg.delete(5000);
+          }).catch(e => console.log(e));
+          message.delete().catch(e => console.log(e));
+          
         }
-        return 2;
+      }
     }
-
-    var isBotChannel = guildOptions.channels.botOnlyChannelIDs.find(c => c === message.channel.id);
-    if (isBotChannel) {
-        const args = message.content.slice(guildOptions.variables.prefix.length).split(' '[0]);
-
-        if (!message.content.startsWith(guildOptions.variables.prefix)) {
-
-            message.channel.send('This is an bot channel, you can only send commands of the bot there!').then(_msg => {
-                console.log(_msg.id);
-                _msg.delete(5000).then(() => console.log('deleted bot message')).catch(e => console.log(e));
-            }).catch(e => console.log(e));
-            message.delete().then(() => console.log('deleted user message')).catch(e => console.log(e));
-
-        } else {
-
-            const commandName = args.shift().toLowerCase();
-            const command = Collection.get(commandName) || Collection.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-            if (!command) {
-                message.channel.send('This is an bot channel, you can only send commands of the bot there!').then(_msg => {
-                    _msg.delete(5000).then(() => console.log('deleted bot message')).catch(e => console.log(e));
-                }).catch(e => console.log(e));
-                message.delete().then(() => console.log('deleted user message')).catch(e => console.log(e));
-
-            }
-        }
-        return 0;
+    return 2;
+  }
+  
+  var isBotChannel = guildOptions.channels.botOnlyChannelIDs.find(c => c === message.channel.id);
+  if(isBotChannel) {
+    const args = message.content.slice(guildOptions.variables.prefix.length).split(' '[0]);
+    
+    if(!message.content.startsWith(guildOptions.variables.prefix)) {
+      
+      message.channel.send('This is an bot channel, you can only send commands of the bot there!').then(_msg => {
+        console.log(_msg.id);
+        _msg.delete(5000).then(() => console.log('deleted bot message')).catch(e => console.log(e));
+      }).catch(e => console.log(e));
+      message.delete().then(() => console.log('deleted user message')).catch(e => console.log(e));
+      
+    } else {
+      
+      const commandName = args.shift().toLowerCase();
+      const command = Collection.get(commandName) || Collection.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+      if(!command) {
+        message.channel.send('This is an bot channel, you can only send commands of the bot there!').then(_msg => {
+          _msg.delete(5000).then(() => console.log('deleted bot message')).catch(e => console.log(e));
+        }).catch(e => console.log(e));
+        message.delete().then(() => console.log('deleted user message')).catch(e => console.log(e));
+        
+      }
     }
-
-    var isUserChannel = guildOptions.channels.userOnlyChannelIDs.find(c => c === message.channel.id);
-    if (isUserChannel) {
-        return 1;
-    }
+    return 0;
+  }
+  
+  var isUserChannel = guildOptions.channels.userOnlyChannelIDs.find(c => c === message.channel.id);
+  if(isUserChannel) {
+    return 1;
+  }
 }

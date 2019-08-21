@@ -5,26 +5,26 @@ module.exports = {
     description: 'Change the servers set prefix.',
     guildOnly: true,
     permissionsRequired: ['ADMINISTRATOR'],
-    cooldown: 60,
+    cooldown: 30,
     args: true,
     aliases: ['prefix'],
     usage: '[command name] "Prefix"',
     async execute(client, message, args) {
         const currentGuildID = message.guild.id;
         const newPrefix = args[0];
-        if (1 < newPrefix.size < 5) {
+        if (1 <= newPrefix.length < 5) {
             guildSettings.findOne({
                 id: currentGuildID
             }, (err, guild) => {
-                if (err) {
-                    console.error(err);
-                }
+                if (err) return console.log(err);
                 guild.variables.prefix = newPrefix;
-                return guild.save();
+                guildSettings.findOneAndUpdate({id: currentGuildID}, guild, (err, doc) => {
+                    if(err) return console.log(err);
+                })
             });
-            message.reply('I\'ve set the guild prefix to `' + newPrefix + '`');
+            message.channel.send('I have set the guild prefix to `' + newPrefix + '`');
         } else {
-            message.reply('Your prefix `' + newPrefix + '` was too long!')
+            message.channel.send('Your prefix `' + newPrefix + '` had too many/less characters!')
         }
     }
 };

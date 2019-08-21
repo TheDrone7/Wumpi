@@ -33,13 +33,13 @@ Snow - Artist
 
 
 Trello Board:
-https://trello.com/b/CaDseHu8
+[https://trello.com/b/CaDseHu8](https://trello.com/b/CaDseHu8)
 
 Discord:
-https://discord.gg/mPPBNty
+[https://discord.gg/mPPBNty](https://trello.com/b/CaDseHu8)
 
 Panel:
-https://www.wumpi.xyz/dashboard
+[https://www.wumpi.xyz/dashboard](https://trello.com/b/CaDseHu8)
 
 ## Setup (Invite Bot/Normal)
 - Invite Bot with [Invite Link](https://discordapp.com/oauth2/authorize?client_id=592568340485111827&permissions=8&scope=bot)
@@ -49,4 +49,3 @@ https://www.wumpi.xyz/dashboard
 - Configure Config.json Provided ([How to set up bot and get Bot Token/Client ID](https://github.com/alex5219/Wumpi/blob/master/BotTokenAndID.md/))
 - Install Required Modules using `npm install`
 - Use `npm start` to start bot
-

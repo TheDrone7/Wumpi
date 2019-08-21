@@ -16,25 +16,25 @@ module.exports = {
             id: currentGuildID
         }, (err, g) => {
             if (err) return console.log(err);
-
+            
             var newLog = message.guild.channels.find(c => c.name.toLowerCase() === newChannel.toLowerCase());
-            if (!newLog) newLog = message.guild.channels.find(c => c.id === newChannel);
-
-            if (!newLog) return message.channel.send('Wasnt able to find that channel!');
-
-            if (newLog.id === g.channels.ticketLogChannelID) return message.channel.send('This channel already is a ticket log channel!');
-
+            if(!newLog) newLog =  message.guild.channels.find(c => c.id === newChannel);
+          
+            if(!newLog) return message.channel.send('Wasnt able to find that channel!');
+          
+            if(newLog.id === g.channels.ticketLogChannelID) return message.channel.send('This channel already is a ticket log channel!');
+            
             var OldLog = message.guild.channels.find(c => c.id === g.channels.ticketLogChannelID);
-
+          
             g.channels.ticketLogChannelID = newLog.id;
             guildSettings.findOneAndUpdate({id: currentGuildID}, g, (err) => {
-                if (err) throw err;
+              if(err) throw err;
             });
-
-            if (!OldLog) {
-                message.channel.send('I have set the ticket log to `' + newLog.name + '`');
+          
+            if(!OldLog) {
+              message.channel.send('I have set the ticket log to `' + newLog.name + '`');
             } else {
-                message.channel.send('I have set the ticket log from `' + OldLog.name + '` to `' + newLog.name + '`');
+              message.channel.send('I have set the ticket log from `' + OldLog.name + '` to `' + newLog.name + '`');
             }
         });
     }
