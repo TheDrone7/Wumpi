@@ -1,0 +1,13 @@
+node_modules/
+*.tsbuildinfo
+.idea/
+.npm
+.eslintcache
+.node_repl_history
+.env
+.env.test
+.cache
+.parcel-cache
+dist
+database.sqlite
+package-lock.json
