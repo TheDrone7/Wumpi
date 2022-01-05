@@ -1,4 +1,5 @@
 import type { ClientOptions } from 'discord.js';
+import { ScheduledTaskRedisStrategy } from '@sapphire/plugin-scheduled-tasks/register-redis';
 
 const config: ClientOptions = {
   intents: [
@@ -18,6 +19,21 @@ const config: ClientOptions = {
   ],
   allowedMentions: {
     repliedUser: false
+  },
+  tasks: {
+    strategy: new ScheduledTaskRedisStrategy({
+      bull: {
+        redis: {
+          host: process.env.REDIS_HOST,
+          port: parseInt(process.env.REDIS_PORT!),
+          password: process.env.REDIS_PASSWORD
+        },
+        defaultJobOptions: {
+          removeOnComplete: true,
+          removeOnFail: true
+        }
+      }
+    })
   }
 };
 

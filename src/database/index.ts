@@ -9,8 +9,7 @@ const initDb = async () => {
   });
 
   const generator = orm.getSchemaGenerator();
-  const deleteAndCreate = await generator.generate();
-  await generator.execute(deleteAndCreate);
+  await generator.updateSchema();
 
   return orm;
 };
@@ -18,3 +17,5 @@ const initDb = async () => {
 export default initDb;
 
 export { Log } from './entities/Log';
+export { Lockdown } from './entities/Lockdown';
+export { Permission } from './entities/Permission';

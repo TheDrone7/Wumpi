@@ -1,6 +1,7 @@
 import { send } from '@sapphire/plugin-editable-commands';
 import { Message, MessageEmbed } from 'discord.js';
 import { RandomLoadingMessage } from './constants';
+import unlockGuild from './utilities/unlockGuild';
 
 export function pickRandom<T>(array: readonly T[]): T {
   const { length } = array;
@@ -16,3 +17,5 @@ export function sendLoadingMessage(message: Message): Promise<typeof message> {
     ]
   });
 }
+
+export { unlockGuild };

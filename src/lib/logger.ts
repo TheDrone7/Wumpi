@@ -17,22 +17,22 @@ class WumpiLogger {
     this.db = db;
   }
 
-  public info(...message: string[]) {
+  public async info(...message: string[]) {
     for (const msg of message) this.pino.info(msg);
     const newLog = new Log();
     newLog.message = message.join(' ');
     newLog.kind = 'INFO';
     newLog.timestamp = new Date().toISOString();
-    this.db.em.persistAndFlush([newLog]);
+    await this.db.em.fork().persistAndFlush([newLog]);
   }
 
-  public error(...message: string[]) {
+  public async error(...message: string[]) {
     for (const msg of message) this.pino.error(msg);
     const newLog = new Log();
     newLog.message = message.join(' ');
     newLog.kind = 'ERROR';
     newLog.timestamp = new Date().toISOString();
-    this.db.em.persistAndFlush([newLog]);
+    await this.db.em.fork().persistAndFlush([newLog]);
   }
 
   public debug(...message: string[]) {
