@@ -3,6 +3,7 @@ import { Command, CommandOptions, Args } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 import { Duration } from '@sapphire/time-utilities';
 import { Permission, Lockdown } from '../../database';
+import details from '../../lib/details';
 
 @ApplyOptions<CommandOptions>({
   name: 'lockdown',
@@ -11,6 +12,7 @@ import { Permission, Lockdown } from '../../database';
   syntax: '[timer]',
   runIn: 'GUILD_ANY',
   cooldownDelay: 300_000,
+  detailedDescription: details.lockdown,
   requiredUserPermissions: ['MANAGE_GUILD'],
   requiredClientPermissions: ['MANAGE_GUILD', 'MANAGE_CHANNELS']
 })

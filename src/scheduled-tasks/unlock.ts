@@ -1,6 +1,6 @@
 import { ScheduledTask } from '@sapphire/plugin-scheduled-tasks';
 import type { PieceContext } from '@sapphire/framework';
-import { unlockGuild } from '../lib/utils';
+import { unlockGuild } from '../database/';
 
 export class UnlockTask extends ScheduledTask {
   public constructor(context: PieceContext) {

@@ -1,6 +1,7 @@
 import { Command, CommandOptions, Args } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Message } from 'discord.js';
+import details from '../../lib/details';
 
 @ApplyOptions<CommandOptions>({
   name: 'ban',
@@ -9,6 +10,7 @@ import type { Message } from 'discord.js';
   syntax: '<member> [reason]',
   runIn: 'GUILD_ANY',
   cooldownDelay: 10_000,
+  detailedDescription: details.kick,
   requiredUserPermissions: ['KICK_MEMBERS'],
   requiredClientPermissions: ['KICK_MEMBERS']
 })

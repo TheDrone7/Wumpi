@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
-import { unlockGuild } from '../../lib/utils';
+import { unlockGuild } from '../../database/';
 
 @ApplyOptions<CommandOptions>({
   name: 'unlock',

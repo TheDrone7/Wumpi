@@ -1,7 +1,7 @@
 import { container } from '@sapphire/framework';
-import { Lockdown, Permission } from '../../database';
+import { Lockdown, Permission } from '../index';
 
-const unlockGuild = async (guildId: string, force: boolean = false) => {
+export const unlockGuild = async (guildId: string, force: boolean = false) => {
   const guild = await container.client.guilds.fetch(guildId);
   const db = container.db.em.fork();
   const lockdown: Lockdown | null = await db.findOne(Lockdown, {
@@ -23,5 +23,3 @@ const unlockGuild = async (guildId: string, force: boolean = false) => {
   await db.remove(lockdown).flush();
   return true;
 };
-
-export default unlockGuild;

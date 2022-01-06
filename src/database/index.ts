@@ -19,3 +19,8 @@ export default initDb;
 export { Log } from './entities/Log';
 export { Lockdown } from './entities/Lockdown';
 export { Permission } from './entities/Permission';
+export { Settings } from './entities/Setting';
+export { ModeratorLog } from './entities/ModeratorLog';
+export { Ticket } from './entities/Ticket';
+
+export * from './utilities';

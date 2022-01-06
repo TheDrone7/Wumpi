@@ -7,12 +7,14 @@ import {
 } from '@sapphire/framework';
 import { PaginatedMessage } from '@sapphire/discord.js-utilities';
 import { MessageEmbed, Message } from 'discord.js';
+import details from '../../lib/details';
 
 @ApplyOptions<CommandOptions>({
   name: 'help',
   description: 'Get a list of all or details about a single command!',
   category: 'Utility',
-  syntax: '[command]'
+  syntax: '[command]',
+  detailedDescription: details.help
 })
 export class HelpCommand extends Command {
   public async messageRun(message: Message, args: Args) {
@@ -67,19 +69,21 @@ export class HelpCommand extends Command {
       );
       if (!searched) return message.channel.send('This command was not found.');
       else {
-        const details = searched.options;
+        const options = searched.options;
         const helpEmbed = new MessageEmbed()
-          .setTitle(details.name + ' Commands')
+          .setTitle(options.name + ' Commands')
           .setTimestamp()
           .setColor('#5865F2')
           .setThumbnail(this.container.client.user!.displayAvatarURL())
-          .addField('Category', details.category + ' Commands')
-          .addField('description', details.description!);
+          .addField('Category', options.category + ' Commands')
+          .addField('description', options.description!);
 
-        let syntax = prefix + details.name!;
-        if (details.syntax) syntax += ' ' + details.syntax;
+        let syntax = prefix + options.name!;
+        if (options.syntax) syntax += ' ' + options.syntax;
 
         helpEmbed.addField('Syntax', '```\n' + syntax + '\n```');
+        if (options.detailedDescription)
+          helpEmbed.addField('Details', options.detailedDescription);
         return message.channel.send({ embeds: [helpEmbed] });
       }
     }

@@ -37,5 +37,5 @@ https://discord.gg/mPPBNty
 
 ## Setup (Invite Bot/Normal)
 - Invite Bot with [Invite Link](https://discordapp.com/oauth2/authorize?client_id=592568340485111827&permissions=8&scope=bot)
-- Use [Web Panel](https://panel.wumpi.xyz/)
+- Use [Web Panel(WIP)]()
 

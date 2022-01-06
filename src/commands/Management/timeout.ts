@@ -2,6 +2,7 @@ import { Args, Command, CommandOptions } from '@sapphire/framework';
 import { Duration } from '@sapphire/time-utilities';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Message } from 'discord.js';
+import details from '../../lib/details';
 
 @ApplyOptions<CommandOptions>({
   name: 'timeout',
@@ -11,6 +12,7 @@ import type { Message } from 'discord.js';
   syntax: '<member> [duration] [reason]',
   runIn: 'GUILD_ANY',
   cooldownDelay: 10_000,
+  detailedDescription: details.timeout,
   requiredUserPermissions: ['MODERATE_MEMBERS'],
   requiredClientPermissions: ['MODERATE_MEMBERS']
 })
