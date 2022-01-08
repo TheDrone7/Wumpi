@@ -13,7 +13,7 @@ export const notification = (
     .setDescription(message)
     .setTimestamp()
     .setColor(colors[kind])
-    .setFooter(author.username, author.displayAvatarURL());
+    .setFooter({ text: author.username, iconURL: author.displayAvatarURL() });
 };
 
 export const helpEmbed = (title: string, e?: MessageEmbed) => {

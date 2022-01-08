@@ -5,36 +5,30 @@ export class Settings {
   @PrimaryKey()
   guildId!: string;
 
-  @Property()
+  @Property({ nullable: true })
   supportCategory?: string;
 
-  @Property()
+  @Property({ nullable: true })
   supportChannels?: string[] = [];
 
-  @Property()
+  @Property({ nullable: true })
   supportMessage?: string;
 
-  @Property()
+  @Property({ nullable: true })
   ticketLogs?: string;
 
-  @Property()
+  @Property({ nullable: true })
   joinLogs?: string;
 
-  @Property()
+  @Property({ nullable: true })
   moderatorLogs?: string;
 
-  @Property()
+  @Property({ nullable: true })
   messageLogs?: string;
 
-  @Property()
+  @Property({ nullable: true })
   suggestions?: string[];
 
-  @Property()
-  botOnly?: string[];
-
-  @Property()
+  @Property({ nullable: true })
   userOnly?: string[];
-
-  @Property()
-  imageOnly?: string[];
 }

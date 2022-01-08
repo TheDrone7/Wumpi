@@ -24,17 +24,18 @@ export class CloseTicketCommand extends Command {
       return message.reply('You do not have an open ticket.');
 
     const ticket = (await db.findOne(Ticket, {
-      userId: message.author.id
+      userId: message.author.id,
+      status: 'open'
     }))!;
 
     try {
       const channel = await message.guild!.channels.fetch(ticket.channelId).catch();
 
       if (channel) await channel.delete();
-      await delSupportChannel(ticket.channelId, message.guildId!);
+      await delSupportChannel(message.author.id, message.guildId!);
 
       ticket.status = 'closed';
-      return db.persistAndFlush([ticket]);
+      return await db.persistAndFlush([ticket]);
     } catch (e: any) {
       const embed = notification(message.author, 'error', 'Error', e.stack || e.message || e.toString());
       return message.channel.send({ embeds: [embed] }).catch();

@@ -45,36 +45,31 @@ export class SettingsCommand extends Command {
         if (kind === 'support-message')
           if (disable) await setSupportCategory(message.guild!.id, undefined);
           else await setSupportMessage(message.guild!.id, channel);
-      } else {
-        if (kind === 'user-only')
-          if (disable) await removeChannelType(channel.id, message.guild!.id, 'user');
-          else await setChannelType(channel.id, message.guild!.id, 'user');
-
-        if (kind === 'suggestions')
-          if (disable) await removeChannelType(channel.id, message.guild!.id, 'suggestions');
-          else await setChannelType(channel.id, message.guild!.id, 'suggestions');
-
-        if (kind === 'support')
-          if (disable) await setSupportCategory(message.guild!.id, undefined);
-          else await setSupportCategory(message.guild!.id, channel.id);
-
-        if (kind === 'ticket-logs')
-          if (disable) await disableLogs('ticket', message.guild!.id);
-          else await setTicketLogs(channel.id, message.guild!.id);
-
-        if (kind === 'join-logs')
-          if (disable) await disableLogs('join', message.guild!.id);
-          else await setJoinLogs(channel.id, message.guild!.id);
-
-        if (kind === 'message-logs')
-          if (disable) await disableLogs('message', message.guild!.id);
-          else await setMessageLogs(channel.id, message.guild!.id);
-
-        if (kind === 'moderator-logs')
-          if (disable) await disableLogs('moderator', message.guild!.id);
-          else await setModeratorLogs(channel.id, message.guild!.id);
-      }
-    } catch (e) {
+        else return message.reply('Invalid config');
+      } else if (kind === 'user-only')
+        if (disable) await removeChannelType(channel.id, message.guild!.id, 'user');
+        else await setChannelType(channel.id, message.guild!.id, 'user');
+      else if (kind === 'suggestions')
+        if (disable) await removeChannelType(channel.id, message.guild!.id, 'suggestions');
+        else await setChannelType(channel.id, message.guild!.id, 'suggestions');
+      else if (kind === 'support')
+        if (disable) await setSupportCategory(message.guild!.id, undefined);
+        else await setSupportCategory(message.guild!.id, channel.id);
+      else if (kind === 'ticket-logs')
+        if (disable) await disableLogs('ticket', message.guild!.id);
+        else await setTicketLogs(channel.id, message.guild!.id);
+      else if (kind === 'join-logs')
+        if (disable) await disableLogs('join', message.guild!.id);
+        else await setJoinLogs(channel.id, message.guild!.id);
+      else if (kind === 'message-logs')
+        if (disable) await disableLogs('message', message.guild!.id);
+        else await setMessageLogs(channel.id, message.guild!.id);
+      else if (kind === 'moderator-logs')
+        if (disable) await disableLogs('moderator', message.guild!.id);
+        else await setModeratorLogs(channel.id, message.guild!.id);
+      else return message.reply('Invalid config');
+    } catch (e: any) {
+      await this.container.log.error(e.stack || e.message || e);
       return await message.reply('Unable to update channel settings');
     }
     return await message.reply('Channel settings have been updated!');

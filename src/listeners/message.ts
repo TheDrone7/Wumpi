@@ -6,7 +6,7 @@ export class MessageListener extends Listener {
   public constructor(context: PieceContext, options: ListenerOptions) {
     super(context, {
       ...options,
-      event: 'message'
+      event: 'messageCreate'
     });
   }
 
@@ -14,7 +14,8 @@ export class MessageListener extends Listener {
     const db = this.container.db.em.fork();
     if (message.guildId) {
       const ticket = await db.findOne(Ticket, {
-        userId: message.author.id
+        channelId: message.channel.id,
+        status: 'open'
       });
       if (ticket && message.content) {
         ticket.messages.push(message.content);
