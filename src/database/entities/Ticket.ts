@@ -9,7 +9,7 @@ export class Ticket {
   userId!: string;
 
   @Property()
-  topic!: string;
+  channelId!: string;
 
   @Property()
   status!: string;

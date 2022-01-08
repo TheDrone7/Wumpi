@@ -9,7 +9,7 @@ export class Settings {
   supportCategory?: string;
 
   @Property()
-  supportChannels?: string[];
+  supportChannels?: string[] = [];
 
   @Property()
   supportMessage?: string;

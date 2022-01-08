@@ -8,9 +8,3 @@ export class OwnerOnlyPrecondition extends Precondition {
       : this.error({ message: 'Only the src owner can use this command!' });
   }
 }
-
-declare module '@sapphire/framework' {
-  interface Preconditions {
-    OwnerOnly: never;
-  }
-}

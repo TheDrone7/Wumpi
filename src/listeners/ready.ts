@@ -9,8 +9,8 @@ export class ReadyListener extends Listener {
     });
   }
 
-  public run() {
+  public async run() {
     const { username, id } = this.container.client.user!;
-    this.container.log.info(`Successfully logged in as ${username} (${id})`);
+    await this.container.log.info(`Successfully logged in as ${username} (${id})`);
   }
 }

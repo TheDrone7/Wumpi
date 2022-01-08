@@ -2,12 +2,20 @@ export default {
   set: `This command is used to modify the types of channels. The valid channel types are
   
   **1. user-only**: Only users can send messages in this channel, any messages sent by bots will be deleted.
+  
   **2. suggestions**: Any messages sent in this channel will be deleted, resent by the bot, with a poll system.
-  **3. support**: This has to be a channel category and not a text channel. Setting this will enable support command in your server. Any new support channels will be created under this category.
-  **4. ticket-logs**: All logs of opening and closing of support tickets will be sent here.
-  **5. join-logs**: All logs of people joining and leaving will be sent here.
-  **6. moderator-logs**: All logs of moderator actions will be sent here.
-  **7. message-logs**: All logs of message edit/delete will be sent here.
+  
+  **3. support**: This has to be a channel category and not a text channel. Setting this will enable support commands in your server. Any new support channels will be created under this category.
+  
+  **4. support-message:** This message will be sent when a new support ticket is created in the newly created channel for the ticket.
+  
+  **5. ticket-logs**: All logs of opening and closing of support tickets will be sent here.
+  
+  **6. join-logs**: All logs of people joining and leaving will be sent here.
+  
+  **7. moderator-logs**: All logs of moderator actions will be sent here.
+  
+  **8. message-logs**: All logs of message edit/delete will be sent here.
   
   Followed by the channel type, you need to provide the channel which you want to change the settings for.
   

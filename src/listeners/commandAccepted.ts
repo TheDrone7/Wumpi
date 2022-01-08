@@ -1,9 +1,4 @@
-import {
-  Listener,
-  PieceContext,
-  ListenerOptions,
-  CommandAcceptedPayload
-} from '@sapphire/framework';
+import { Listener, PieceContext, ListenerOptions, CommandAcceptedPayload } from '@sapphire/framework';
 
 export class AcceptedListener extends Listener {
   public constructor(context: PieceContext, options: ListenerOptions) {
@@ -13,9 +8,7 @@ export class AcceptedListener extends Listener {
     });
   }
 
-  public run({ message, command }: CommandAcceptedPayload) {
-    this.container.log.info(
-      `${message.author.tag} (${message.author.id}) used command '${command.name}'.`
-    );
+  public async run({ message, command }: CommandAcceptedPayload) {
+    await this.container.log.info(`${message.author.tag} (${message.author.id}) used command '${command.name}'.`);
   }
 }

@@ -1,4 +1,4 @@
 export { unlockGuild } from './unlockGuild';
-export * from './channelTypes/support';
-export * from './channelTypes/logs';
-export * from './channelTypes/restricted';
+export * from './settings/support';
+export * from './settings/logs';
+export * from './settings/restricted';

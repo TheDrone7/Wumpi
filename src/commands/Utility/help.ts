@@ -1,13 +1,9 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import {
-  CommandStore,
-  Command,
-  CommandOptions,
-  Args
-} from '@sapphire/framework';
+import { CommandStore, Command, CommandOptions, Args } from '@sapphire/framework';
 import { PaginatedMessage } from '@sapphire/discord.js-utilities';
-import { MessageEmbed, Message } from 'discord.js';
+import type { Message } from 'discord.js';
 import details from '../../lib/details';
+import { helpEmbed } from '../../lib/embeds';
 
 @ApplyOptions<CommandOptions>({
   name: 'help',
@@ -46,45 +42,48 @@ export class HelpCommand extends Command {
 
       for (const category of categories)
         helpMessage.addPageEmbed((e) =>
-          e
-            .setTitle(`${category} Commands`)
-            .setTimestamp()
-            .setColor('#5865F2')
-            .setThumbnail(this.container.client.user!.displayAvatarURL())
-            .setFields(
-              commands[category].map((c) => ({
-                name: prefix + c.name!,
-                value: c.description!,
-                inline: false
-              }))
-            )
+          helpEmbed(`${category} Commands`, e).setFields(
+            commands[category].map((c) => ({
+              name: prefix + c.name!,
+              value: c.description!,
+              inline: false
+            }))
+          )
         );
 
       return helpMessage.run(message);
     } else {
       const searched = commandStore.find(
-        (c) =>
-          c.options.name === command.toLowerCase() ||
-          (c.options.aliases || []).includes(command.toLowerCase())
+        (c) => c.options.name === command.toLowerCase() || (c.options.aliases || []).includes(command.toLowerCase())
       );
       if (!searched) return message.channel.send('This command was not found.');
       else {
         const options = searched.options;
-        const helpEmbed = new MessageEmbed()
-          .setTitle(options.name + ' Commands')
-          .setTimestamp()
-          .setColor('#5865F2')
-          .setThumbnail(this.container.client.user!.displayAvatarURL())
+        const embed = helpEmbed(`${options.name} Command`)
           .addField('Category', options.category + ' Commands')
           .addField('description', options.description!);
+
+        if (options.aliases) embed.addField('Aliases', options.aliases.map((a) => `\`${a}\``).join(', '));
 
         let syntax = prefix + options.name!;
         if (options.syntax) syntax += ' ' + options.syntax;
 
-        helpEmbed.addField('Syntax', '```\n' + syntax + '\n```');
-        if (options.detailedDescription)
-          helpEmbed.addField('Details', options.detailedDescription);
-        return message.channel.send({ embeds: [helpEmbed] });
+        embed.addField('Syntax', '```\n' + syntax + '\n```');
+        if (options.detailedDescription) {
+          const finalDetails = [];
+          let current = '';
+          const detailed = options.detailedDescription.split('\n');
+          for (const detailedLine of detailed)
+            if (current.length + detailedLine.length > 1000) {
+              finalDetails.push(current);
+              current = detailedLine;
+            } else current += '\n' + detailedLine;
+          if (current.length > 0) finalDetails.push(current);
+
+          for (const detail of finalDetails) embed.addField('Details', detail);
+        }
+
+        return message.channel.send({ embeds: [embed] });
       }
     }
   }

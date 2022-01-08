@@ -14,3 +14,10 @@ declare module '@sapphire/framework' {
     syntax?: string;
   }
 }
+
+declare module '@sapphire/framework' {
+  interface Preconditions {
+    OwnerOnly: never;
+    SupportEnabled: never;
+  }
+}

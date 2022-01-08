@@ -37,10 +37,7 @@ export const setMessageLogs = async (channelId: string, guildId: string) => {
   await db.persist(settings).flush();
 };
 
-export const disableLogs = async (
-  kind: 'ticket' | 'join' | 'moderator' | 'message',
-  guildId: string
-) => {
+export const disableLogs = async (kind: 'ticket' | 'join' | 'moderator' | 'message', guildId: string) => {
   const db = container.db.em.fork();
   const guildSettings = await db.findOne(Settings, { guildId });
   const settings = guildSettings || new Settings();

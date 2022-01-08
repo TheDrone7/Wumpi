@@ -31,9 +31,7 @@ export class LockdownCommand extends Command {
     for (const channel of channels.values()) {
       const overwrite = new Permission();
       overwrite.id = channel.id;
-      overwrite.perms = JSON.stringify(
-        channel.permissionOverwrites.cache.toJSON()
-      );
+      overwrite.perms = JSON.stringify(channel.permissionOverwrites.cache.toJSON());
       db.persist(overwrite);
       await channel.permissionOverwrites.set(
         [

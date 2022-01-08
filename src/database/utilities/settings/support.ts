@@ -1,10 +1,7 @@
 import { Settings } from '../../index';
 import { container } from '@sapphire/framework';
 
-export const setSupportCategory = async (
-  channelId: string | undefined,
-  guildId: string
-) => {
+export const setSupportCategory = async (guildId: string, channelId?: string) => {
   const db = container.db.em.fork();
   const guildSettings = await db.findOne(Settings, { guildId });
   const settings = guildSettings || new Settings();
@@ -23,14 +20,20 @@ export const addSupportChannel = async (channelId: string, guildId: string) => {
   await db.persist(settings).flush();
 };
 
+export const setSupportMessage = async (guildId: string, message?: string) => {
+  const db = container.db.em.fork();
+  const guildSettings = await db.findOne(Settings, { guildId });
+  const settings = guildSettings || new Settings();
+  settings.guildId = guildId;
+  settings.supportMessage = message;
+  await db.persist(settings).flush();
+};
+
 export const delSupportChannel = async (channelId: string, guildId: string) => {
   const db = container.db.em.fork();
   const guildSettings = await db.findOne(Settings, { guildId });
   const settings = guildSettings || new Settings();
   settings.guildId = guildId;
-  if (settings.supportChannels)
-    settings.supportChannels = settings.supportChannels.filter(
-      (c) => c !== channelId
-    );
+  if (settings.supportChannels) settings.supportChannels = settings.supportChannels.filter((c) => c !== channelId);
   await db.persist(settings).flush();
 };

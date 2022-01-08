@@ -1,9 +1,4 @@
-import {
-  Listener,
-  PieceContext,
-  ListenerOptions,
-  UserError
-} from '@sapphire/framework';
+import { Listener, PieceContext, ListenerOptions, UserError } from '@sapphire/framework';
 
 export class ErrorListener extends Listener {
   public constructor(context: PieceContext, options: ListenerOptions) {
@@ -13,7 +8,7 @@ export class ErrorListener extends Listener {
     });
   }
 
-  public run(error: UserError) {
-    this.container.log.error(error.stack || error.message);
+  public async run(error: UserError) {
+    await this.container.log.error(error.stack || error.message);
   }
 }

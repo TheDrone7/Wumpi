@@ -35,9 +35,7 @@ export class TimeoutCommand extends Command {
     if (!member) return;
     const guild = message.guild!;
 
-    await member.send(
-      `You were timed out from **${guild.name}** for ${length} for reason: \`${reason}\`.`
-    );
+    await member.send(`You were timed out from **${guild.name}** for ${length} for reason: \`${reason}\`.`);
     await member.timeout(duration, reason);
 
     return message.channel.send(`Timed out ${member.user.tag} for ${length}.`);
