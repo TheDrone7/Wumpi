@@ -9,6 +9,6 @@ export class ErrorListener extends Listener {
   }
 
   public async run(error: UserError) {
-    await this.container.log.error(error.stack || error.message);
+    await this.container.logger.error(error.stack || error.message);
   }
 }

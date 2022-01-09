@@ -9,6 +9,6 @@ export class AcceptedListener extends Listener {
   }
 
   public async run({ message, command }: CommandAcceptedPayload) {
-    await this.container.log.info(`${message.author.tag} (${message.author.id}) used command '${command.name}'.`);
+    await this.container.logger.info(`${message.author.tag} (${message.author.id}) used command '${command.name}'.`);
   }
 }

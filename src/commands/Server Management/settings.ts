@@ -43,8 +43,6 @@ export class SettingsCommand extends Command {
         if (channel.length > 500)
           return message.channel.send('The message is too long, it needs to be less than 500 characters.');
 
-        await this.container.log.info(`${kind}\n${disable}\n${channel}`);
-
         if (kind === 'support-message')
           if (disable) await setSupportCategory(message.guild!.id, undefined);
           else await setSupportMessage(message.guild!.id, channel);
@@ -72,7 +70,7 @@ export class SettingsCommand extends Command {
         else if (channel !== 'null') await setModeratorLogs(channel.id, message.guild!.id);
       } else return message.reply('Invalid config');
     } catch (e: any) {
-      await this.container.log.error(e.stack || e.message || e);
+      await this.container.logger.error(e.stack || e.message || e);
       return await message.reply('Unable to update channel settings');
     }
     return await message.reply('Channel settings have been updated!');

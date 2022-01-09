@@ -11,6 +11,6 @@ export class ReadyListener extends Listener {
 
   public async run() {
     const { username, id } = this.container.client.user!;
-    await this.container.log.info(`Successfully logged in as ${username} (${id})`);
+    await this.container.logger.info(`Successfully logged in as ${username} (${id})`);
   }
 }

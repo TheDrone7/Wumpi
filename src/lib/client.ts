@@ -13,7 +13,7 @@ export default class WumpiClient extends SapphireClient {
 
     initDb().then((db) => {
       container.db = db;
-      container.log = new Logger(db);
+      container.logger = new Logger(db);
     });
   }
 }
