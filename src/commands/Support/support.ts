@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
-import type { Message } from 'discord.js';
+import type { Message, TextChannel } from 'discord.js';
 import { addSupportChannel, Settings, Ticket } from '../../database';
 import { notification } from '../../lib/embeds';
 
@@ -57,6 +57,17 @@ export class SupportCommand extends Command {
       let content = `This ticket was opened by ${message.author.toString()}!\n`;
       content += `Please use ${prefix}close-ticket when the issue as resolved to delete this channel.\n\n`;
       if (guildSettings.supportMessage) content += `\n${guildSettings.supportMessage}`;
+
+      if (guildSettings.ticketLogs) {
+        const logsChannel = (await message.guild!.channels.fetch(guildSettings.ticketLogs)) as TextChannel;
+        const logNotification = notification(
+          message.author,
+          'info',
+          'New Ticket',
+          `New ticket was opened by user ${message.author.tag} (${message.author.id}).`
+        );
+        await logsChannel.send({ embeds: [logNotification] });
+      }
 
       const embed = notification(message.author, 'success', 'Support ticket', content);
       return newChannel.send({ embeds: [embed] });

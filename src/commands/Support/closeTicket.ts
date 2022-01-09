@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
-import type { Message } from 'discord.js';
+import type { Message, TextChannel } from 'discord.js';
 import { delSupportChannel, Settings, Ticket } from '../../database';
 import { notification } from '../../lib/embeds';
 
@@ -34,6 +34,17 @@ export class CloseTicketCommand extends Command {
 
       if (channel) await channel.delete();
       await delSupportChannel(message.author.id, message.guildId!);
+
+      if (guildSettings.ticketLogs) {
+        const logsChannel = (await message.guild!.channels.fetch(guildSettings.ticketLogs)) as TextChannel;
+        const logNotification = notification(
+          message.author,
+          'error',
+          'Ticket Closed',
+          `The ticket opened by user ${message.author.tag} (${message.author.id}) has closed.`
+        );
+        await logsChannel.send({ embeds: [logNotification] });
+      }
 
       ticket.status = 'closed';
       return await db.persistAndFlush([ticket]);
