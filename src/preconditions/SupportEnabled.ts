@@ -8,7 +8,8 @@ export class SupportPrecondition extends Precondition {
     const guildSettings = await db.findOne(Settings, {
       guildId: message.guild!.id
     });
-    if (!guildSettings?.supportCategory) return this.error({ message: 'Support is not enabled in this server.' });
+    if (!guildSettings?.supportCategory)
+      return this.error({ message: 'Support commands are not enabled in this server.' });
     return this.ok();
   }
 }

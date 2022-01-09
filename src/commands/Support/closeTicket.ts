@@ -10,7 +10,8 @@ import { notification } from '../../lib/embeds';
   category: 'Support',
   cooldownDelay: 300_000,
   runIn: 'GUILD_ANY',
-  preconditions: ['SupportEnabled']
+  preconditions: ['SupportEnabled'],
+  requiredClientPermissions: ['MANAGE_CHANNELS']
 })
 export class CloseTicketCommand extends Command {
   public async messageRun(message: Message) {

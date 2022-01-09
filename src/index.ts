@@ -1,3 +1,4 @@
+import '@sapphire/plugin-hmr/register';
 import WumpiClient from './lib/client';
 const client = new WumpiClient();
 

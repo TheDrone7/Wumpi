@@ -7,7 +7,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "start": "node dist/index.js",
-    "dev": "run-s build start",
+    "dev": "run-p watch start",
     "watch:start": "tsc-watch --onSuccess \"node ./dist/index.js\"",
     "format": "prettier --write \"src/**/**.ts\"",
     "lint": "eslint --fix --color \"src/**/**.ts\""
@@ -33,6 +33,7 @@
     "pino-pretty": "^7.3.0"
   },
   "devDependencies": {
+    "@sapphire/plugin-hmr": "^1.0.0",
     "@sapphire/ts-config": "^3.1.6",
     "@types/bull": "^3.15.7",
     "@types/node": "^17.0.0",
