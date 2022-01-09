@@ -3,17 +3,14 @@ import { MessageEmbed, type User } from 'discord.js';
 import { colors } from './constants';
 
 export const notification = (
-  author: User,
+  author: User | undefined,
   kind: 'success' | 'info' | 'error' | 'warn',
   title: string,
   message: string
 ) => {
-  return new MessageEmbed()
-    .setTitle(title)
-    .setDescription(message)
-    .setTimestamp()
-    .setColor(colors[kind])
-    .setFooter({ text: author.username, iconURL: author.displayAvatarURL() });
+  const embed = new MessageEmbed().setTitle(title).setDescription(message).setTimestamp().setColor(colors[kind]);
+  if (author) embed.setFooter({ text: author.username, iconURL: author.displayAvatarURL() });
+  return embed;
 };
 
 export const helpEmbed = (title: string, e?: MessageEmbed) => {
