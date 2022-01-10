@@ -3,11 +3,11 @@ import { Settings } from '../database';
 import type { GuildBan, TextChannel } from 'discord.js';
 import { notification } from '../lib/embeds';
 
-export class BanListener extends Listener {
+export class UnbanListener extends Listener {
   public constructor(context: PieceContext, options: ListenerOptions) {
     super(context, {
       ...options,
-      event: 'guildBanAdd'
+      event: 'guildBanRemove'
     });
   }
 
@@ -15,11 +15,11 @@ export class BanListener extends Listener {
     const auditLogs = (
       await guild.fetchAuditLogs({
         limit: 1,
-        type: 22
+        type: 23
       })
     ).entries.first()!;
 
-    const { reason, executor } = auditLogs;
+    const { executor } = auditLogs;
 
     const db = this.container.db.em.fork();
     const guildSettings = await db.findOne(Settings, {
@@ -29,9 +29,9 @@ export class BanListener extends Listener {
       const logsChannel = (await guild.channels.fetch(guildSettings.moderatorLogs)) as TextChannel;
       const desc = `**TAG:** ${user.tag}\n**ID:** ${user.id}`;
 
-      const embed = notification(user, 'error', 'Member Banned', desc);
+      const embed = notification(user, 'success', 'Member Unbanned', desc);
       embed.setThumbnail(user.displayAvatarURL()).setFooter({ text: 'Created at' }).setTimestamp(user.createdTimestamp);
-      if (reason) embed.addField('Reason', reason);
+
       if (executor)
         embed.setFooter({ text: `By ${executor.tag}`, iconURL: executor.displayAvatarURL() }).setTimestamp();
 
