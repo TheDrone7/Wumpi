@@ -6,7 +6,7 @@ import details from '../../lib/details';
 @ApplyOptions<CommandOptions>({
   name: 'ban',
   description: 'Kick a user from your server!',
-  category: 'Management',
+  category: 'Moderation',
   syntax: '<member> [reason]',
   runIn: 'GUILD_ANY',
   cooldownDelay: 10_000,
@@ -24,6 +24,7 @@ export class KickCommand extends Command {
     if (!member) return;
     const guild = message.guild!;
 
+    if (!member.user.bot)
     member.send(`You were kicked from **${guild.name}** for \`${reason}\`.`).catch();
 
     const result = await member.kick(reason).catch(() => {

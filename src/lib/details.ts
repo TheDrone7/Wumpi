@@ -25,9 +25,13 @@ export default {
   If not specified, the reason defaults to \`No reason\`.
   Notifies the user being banned via DMs if possible.`,
 
-  kick: `This command will ban the kick from the server. You can optionally specify a reason. 
+  kick: `This command will kick the user from the server. You can optionally specify a reason. 
   If not specified, the reason defaults to \`No reason\`.
   Notifies the user being kicked via DMs if possible.`,
+
+  warn: `This command will warn the user in the server. You can optionally specify a reason. 
+  If not specified, the reason defaults to \`No reason\`.
+  Notifies the user being warned via DMs if possible.`,
 
   timeout: `This command will timeout the user from the server for the specified amount of time. You can optionally specify a reason.
   If not specified, the time defaults to 5m (5 minutes).

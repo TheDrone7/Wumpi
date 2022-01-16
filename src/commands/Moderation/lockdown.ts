@@ -8,7 +8,7 @@ import details from '../../lib/details';
 @ApplyOptions<CommandOptions>({
   name: 'lockdown',
   description: 'Start a lockdown in your server!',
-  category: 'Management',
+  category: 'Moderation',
   syntax: '[timer]',
   runIn: 'GUILD_ANY',
   cooldownDelay: 300_000,

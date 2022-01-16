@@ -6,7 +6,7 @@ import { colors } from '../../lib/constants';
 @ApplyOptions<CommandOptions>({
   name: 'echo',
   description: 'Repeats the message specified by the command user.',
-  category: 'Server Management',
+  category: 'Management',
   runIn: 'GUILD_ANY',
   flags: ['embed'],
   syntax: '[--embed] [channel] <message>',

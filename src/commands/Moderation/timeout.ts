@@ -8,7 +8,7 @@ import details from '../../lib/details';
   name: 'timeout',
   aliases: ['mute', 'tempmute'],
   description: 'Timeout a user in your server!',
-  category: 'Management',
+  category: 'Moderation',
   syntax: '<member> [duration] [reason]',
   runIn: 'GUILD_ANY',
   cooldownDelay: 10_000,
@@ -35,9 +35,10 @@ export class TimeoutCommand extends Command {
     if (!member) return;
     const guild = message.guild!;
 
-    await member.send(`You were timed out from **${guild.name}** for ${length} for reason: \`${reason}\`.`);
-    await member.timeout(duration, reason);
+    if (!member.user.bot)
+      await member.send(`You were timed out from **${guild.name}** for ${length} for reason: \`${reason}\`.`);
 
+    await member.timeout(duration, reason);
     return message.channel.send(`Timed out ${member.user.tag} for ${length}.`);
   }
 }

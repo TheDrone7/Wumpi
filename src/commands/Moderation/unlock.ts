@@ -6,7 +6,7 @@ import { unlockGuild } from '../../database/';
 @ApplyOptions<CommandOptions>({
   name: 'unlock',
   description: 'End the lockdown in your server!',
-  category: 'Management',
+  category: 'Moderation',
   runIn: 'GUILD_ANY',
   cooldownDelay: 300_000,
   requiredUserPermissions: ['MANAGE_GUILD'],

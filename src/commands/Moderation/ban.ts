@@ -6,7 +6,7 @@ import details from '../../lib/details';
 @ApplyOptions<CommandOptions>({
   name: 'ban',
   description: 'Ban a user from your server!',
-  category: 'Management',
+  category: 'Moderation',
   syntax: '<member> [reason]',
   runIn: 'GUILD_ANY',
   cooldownDelay: 10_000,
@@ -24,7 +24,9 @@ export class BanCommand extends Command {
     if (!member) return;
     const guild = message.guild!;
 
-    member.send(`You were banned from **${guild.name}** for \`${reason}\`.`).catch();
+    if (!member.user.bot)
+      member.send(`You were banned from **${guild.name}** for \`${reason}\`.`).catch();
+
     const result = await member.ban({ reason }).catch(() => {
       message.reply('Unable to ban the user.');
       return undefined;

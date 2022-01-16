@@ -17,7 +17,7 @@ import details from '../../lib/details';
 @ApplyOptions<CommandOptions>({
   name: 'set',
   description: 'Modify the admin settings in your server!',
-  category: 'Server Management',
+  category: 'Management',
   runIn: 'GUILD_ANY',
   cooldownDelay: 10_000,
   flags: ['disable'],

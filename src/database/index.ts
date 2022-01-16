@@ -22,5 +22,6 @@ export { Permission } from './entities/Permission';
 export { Settings } from './entities/Setting';
 export { ModeratorLog } from './entities/ModeratorLog';
 export { Ticket } from './entities/Ticket';
+export { Warnings } from './entities/Warning';
 
 export * from './utilities';
