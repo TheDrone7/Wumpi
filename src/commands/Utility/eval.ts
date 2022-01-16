@@ -13,14 +13,19 @@ import { colors } from '../../lib/constants';
   description: 'Evaluate code and return result',
   category: 'Utility',
   syntax: '<code>',
-  preconditions: ['OwnerOnly']
+  flags: ['sql'],
+  preconditions: ['OwnerOnly'],
+  quotes: []
 })
 export class EvalCommand extends Command {
   public async messageRun(message: Message, args: Args) {
+    const sql = args.getFlags('sql');
     const code = await args.rest('string');
     const timeout = 60000;
 
-    const { success, result, time, type } = await this.timedEval(message, args, code, timeout);
+    const { success, result, time, type } = sql
+      ? await this.executeSQL(code)
+      : await this.timedEval(message, args, code, timeout);
 
     const footer = codeBlock('ts', type);
     const header = `EVAL ${success ? 'SUCCESS' : 'FAILURE'}`;
@@ -105,6 +110,31 @@ export class EvalCommand extends Command {
       type: type!,
       time: EvalCommand.formatTime(syncTime, asyncTime ?? ''),
       result: EvalCommand.cleanResult(result as string)
+    };
+  }
+
+  private async executeSQL(query: string) {
+    let result, type, success, time;
+    const stopwatch = new Stopwatch();
+    const db = this.container.db.em.fork();
+    try {
+      const response = await db.getConnection().execute(query);
+      result = (Array.isArray(response) && response.length > 0) ? [...Object.keys(response[0])] : 'SUCCESS';
+      type = (result === 'SUCCESS') ? 'RESULT' : 'TABLE';
+      success = true;
+      time = stopwatch.toString();
+    } catch (e: any) {
+      result = e.stack || e.message;
+      type = 'SQLError';
+      success = false;
+      time = stopwatch.toString();
+    }
+    stopwatch.stop();
+    return {
+      result,
+      success,
+      type,
+      time: EvalCommand.formatTime(time)
     };
   }
 
