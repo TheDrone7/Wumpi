@@ -24,8 +24,7 @@ export class BanCommand extends Command {
     if (!member) return;
     const guild = message.guild!;
 
-    if (!member.user.bot)
-      member.send(`You were banned from **${guild.name}** for \`${reason}\`.`).catch();
+    if (!member.user.bot) member.send(`You were banned from **${guild.name}** for \`${reason}\`.`).catch();
 
     const result = await member.ban({ reason }).catch(() => {
       message.reply('Unable to ban the user.');

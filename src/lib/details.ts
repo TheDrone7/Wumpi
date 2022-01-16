@@ -47,5 +47,9 @@ export default {
   All channel permissions are restored back to as they were before the lockdown.`,
 
   help: `This command displays either the list of all commands or the details of the specified command.
-  If no command is specified, the list is displayed, if a valid command is specified, it's details are shown.`
+  If no command is specified, the list is displayed, if a valid command is specified, it's details are shown.`,
+
+  unwarn: `This command will delete a warning whose ID has been specified.
+  All warnings have unique IDs even if they were for different people or even different servers.
+  You can only remove a warning from a server you have sufficient permissions in.`
 };

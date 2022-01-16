@@ -2,9 +2,9 @@ import { Command, CommandOptions, Args } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Message } from 'discord.js';
 import details from '../../lib/details';
-import {warnUser} from "../../database";
-import {notification} from "../../lib/embeds";
-import {moderatorLog} from "../../lib/guildLogs";
+import { warnUser } from '../../database';
+import { notification } from '../../lib/embeds';
+import { moderatorLog } from '../../lib/guildLogs';
 
 @ApplyOptions<CommandOptions>({
   name: 'warn',
@@ -34,14 +34,16 @@ export class WarnCommand extends Command {
       return message.reply('There was an error while warning the user.');
     }
 
-    if (!member.user.bot)
-      member.send(`You were warned in **${guild.name}** for \`${reason}\`.`).catch();
+    if (!member.user.bot) member.send(`You were warned in **${guild.name}** for \`${reason}\`.`).catch();
 
     const desc = `**TAG:** ${member.user.tag}\n**ID:** ${member.user.id}\n\nFOR: \`${reason}\`.\n`;
     const executor = message.author;
 
-    const embed = notification(message.author, 'error', 'Member Warned', desc);
-    embed.setThumbnail(member.user.displayAvatarURL()).setFooter({ text: 'Created at' }).setTimestamp(member.user.createdTimestamp);
+    const embed = notification(message.author, 'warn', 'Member Warned', desc);
+    embed
+      .setThumbnail(member.user.displayAvatarURL())
+      .setFooter({ text: 'Created at' })
+      .setTimestamp(member.user.createdTimestamp);
     embed.setFooter({ text: `By ${executor.tag}`, iconURL: executor.displayAvatarURL() });
 
     await moderatorLog(guild.id, embed);

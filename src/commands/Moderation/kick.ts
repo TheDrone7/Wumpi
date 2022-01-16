@@ -24,8 +24,7 @@ export class KickCommand extends Command {
     if (!member) return;
     const guild = message.guild!;
 
-    if (!member.user.bot)
-    member.send(`You were kicked from **${guild.name}** for \`${reason}\`.`).catch();
+    if (!member.user.bot) member.send(`You were kicked from **${guild.name}** for \`${reason}\`.`).catch();
 
     const result = await member.kick(reason).catch(() => {
       message.reply('Unable to kick the user.');
