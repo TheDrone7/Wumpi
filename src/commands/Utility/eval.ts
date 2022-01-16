@@ -119,8 +119,8 @@ export class EvalCommand extends Command {
     const db = this.container.db.em.fork();
     try {
       const response = await db.getConnection().execute(query);
-      result = (Array.isArray(response) && response.length > 0) ? [...Object.keys(response[0])] : 'SUCCESS';
-      type = (result === 'SUCCESS') ? 'RESULT' : 'TABLE';
+      result = Array.isArray(response) && response.length > 0 ? [...Object.keys(response[0])] : 'SUCCESS';
+      type = result === 'SUCCESS' ? 'RESULT' : 'TABLE';
       success = true;
       time = stopwatch.toString();
     } catch (e: any) {
