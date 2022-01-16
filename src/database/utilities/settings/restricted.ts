@@ -1,7 +1,8 @@
 import { Settings } from '../../index';
 import { container } from '@sapphire/framework';
+import type { Snowflake } from 'discord.js';
 
-export const setChannelType = async (channelId: string, guildId: string, kind: string) => {
+export const setChannelType = async (channelId: Snowflake, guildId: Snowflake, kind: string) => {
   const db = container.db.em.fork();
   const guildSettings = await db.findOne(Settings, { guildId });
   const settings = guildSettings || new Settings();
@@ -17,7 +18,7 @@ export const setChannelType = async (channelId: string, guildId: string, kind: s
   await db.persist(settings).flush();
 };
 
-export const removeChannelType = async (channelId: string, guildId: string, kind: string) => {
+export const removeChannelType = async (channelId: Snowflake, guildId: Snowflake, kind: string) => {
   const db = container.db.em.fork();
   const guildSettings = await db.findOne(Settings, { guildId });
   const settings = guildSettings || new Settings();

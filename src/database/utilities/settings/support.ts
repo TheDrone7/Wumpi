@@ -1,7 +1,8 @@
 import { Settings } from '../../index';
 import { container } from '@sapphire/framework';
+import type { Snowflake } from 'discord.js';
 
-export const setSupportCategory = async (guildId: string, channelId?: string) => {
+export const setSupportCategory = async (guildId: Snowflake, channelId?: Snowflake) => {
   const db = container.db.em.fork();
   const guildSettings = await db.findOne(Settings, { guildId });
   const settings = guildSettings || new Settings();
@@ -10,7 +11,7 @@ export const setSupportCategory = async (guildId: string, channelId?: string) =>
   await db.persist(settings).flush();
 };
 
-export const addSupportChannel = async (channelId: string, guildId: string) => {
+export const addSupportChannel = async (channelId: Snowflake, guildId: Snowflake) => {
   const db = container.db.em.fork();
   const guildSettings = await db.findOne(Settings, { guildId });
   const settings = guildSettings || new Settings();
@@ -20,7 +21,7 @@ export const addSupportChannel = async (channelId: string, guildId: string) => {
   await db.persist(settings).flush();
 };
 
-export const setSupportMessage = async (guildId: string, message?: string) => {
+export const setSupportMessage = async (guildId: Snowflake, message?: Snowflake) => {
   const db = container.db.em.fork();
   const guildSettings = await db.findOne(Settings, { guildId });
   const settings = guildSettings || new Settings();
@@ -29,7 +30,7 @@ export const setSupportMessage = async (guildId: string, message?: string) => {
   await db.persist(settings).flush();
 };
 
-export const delSupportChannel = async (channelId: string, guildId: string) => {
+export const delSupportChannel = async (channelId: Snowflake, guildId: Snowflake) => {
   const db = container.db.em.fork();
   const guildSettings = await db.findOne(Settings, { guildId });
   const settings = guildSettings || new Settings();

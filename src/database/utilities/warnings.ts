@@ -2,7 +2,7 @@ import { container } from '@sapphire/framework';
 import { Warnings } from '../entities/Warning';
 import type { Snowflake } from 'discord.js';
 
-export const warnUser = (user: string, moderator: string, guild: string, reason: string) => {
+export const warnUser = (user: Snowflake, moderator: Snowflake, guild: Snowflake, reason: string) => {
   const db = container.db.em.fork();
   const newWarning = new Warnings();
   newWarning.userId = user;
@@ -12,7 +12,7 @@ export const warnUser = (user: string, moderator: string, guild: string, reason:
   return db.persistAndFlush([newWarning]);
 };
 
-export const getWarnings = async (userId: string, guildId: string) => {
+export const getWarnings = async (userId: Snowflake, guildId: Snowflake) => {
   const db = container.db.em.fork();
   const warns = await db.find(Warnings, { userId, guildId });
   const warnings = [];

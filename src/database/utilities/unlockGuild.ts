@@ -1,7 +1,8 @@
 import { container } from '@sapphire/framework';
 import { Lockdown, Permission } from '../index';
+import type { Snowflake } from 'discord.js';
 
-export const unlockGuild = async (guildId: string, force: boolean = false) => {
+export const unlockGuild = async (guildId: Snowflake, force: boolean = false) => {
   const guild = await container.client.guilds.fetch(guildId);
   const db = container.db.em.fork();
   const lockdown: Lockdown | null = await db.findOne(Lockdown, {
