@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
 import type { Message, TextChannel } from 'discord.js';
-import { addSupportChannel, Settings, Ticket } from '../../database';
+import { addSupportChannel, Settings, Tickets } from '../../database';
 import { notification } from '../../lib/embeds';
 
 @ApplyOptions<CommandOptions>({
@@ -46,7 +46,7 @@ export class SupportCommand extends Command {
 
       await addSupportChannel(message.author.id, message.guildId!);
 
-      const newTicket = new Ticket();
+      const newTicket = new Tickets();
       newTicket.messages = [];
       newTicket.channelId = newChannel.id;
       newTicket.userId = message.author.id;

@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
 import type { Message, TextChannel } from 'discord.js';
-import { delSupportChannel, Settings, Ticket } from '../../database';
+import { delSupportChannel, Settings, Tickets } from '../../database';
 import { notification } from '../../lib/embeds';
 
 @ApplyOptions<CommandOptions>({
@@ -24,7 +24,7 @@ export class CloseTicketCommand extends Command {
     if (!guildSettings.supportChannels?.includes(message.author.id))
       return message.reply('You do not have an open ticket.');
 
-    const ticket = (await db.findOne(Ticket, {
+    const ticket = (await db.findOne(Tickets, {
       userId: message.author.id,
       status: 'open'
     }))!;

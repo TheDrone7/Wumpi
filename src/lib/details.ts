@@ -51,5 +51,7 @@ export default {
 
   unwarn: `This command will delete a warning whose ID has been specified.
   All warnings have unique IDs even if they were for different people or even different servers.
-  You can only remove a warning from a server you have sufficient permissions in.`
+  You can only remove a warning from a server you have sufficient permissions in.`,
+
+  note: ''
 };

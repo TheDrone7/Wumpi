@@ -1,7 +1,7 @@
 import pino, { BaseLogger } from 'pino';
 import pretty from 'pino-pretty';
 import type { MikroORM } from '@mikro-orm/core';
-import { Log } from '../database';
+import { Logs } from '../database';
 import { type ILogger, LogLevel } from '@sapphire/framework';
 
 class WumpiLogger implements ILogger {
@@ -22,7 +22,7 @@ class WumpiLogger implements ILogger {
 
   public async info(...message: readonly string[]) {
     for (const msg of message) this.pino.info(msg);
-    const newLog = new Log();
+    const newLog = new Logs();
     newLog.message = message.join(' ');
     newLog.kind = 'INFO';
     newLog.timestamp = new Date().toISOString();
@@ -31,7 +31,7 @@ class WumpiLogger implements ILogger {
 
   public async error(...message: readonly string[]) {
     for (const msg of message) this.pino.error(msg);
-    const newLog = new Log();
+    const newLog = new Logs();
     newLog.message = message.join(' ');
     newLog.kind = 'ERROR';
     newLog.timestamp = new Date().toISOString();
@@ -40,7 +40,7 @@ class WumpiLogger implements ILogger {
 
   public async fatal(...message: readonly string[]) {
     for (const msg of message) this.pino.fatal(msg);
-    const newLog = new Log();
+    const newLog = new Logs();
     newLog.message = message.join(' ');
     newLog.kind = 'FATAL';
     newLog.timestamp = new Date().toISOString();
@@ -48,8 +48,8 @@ class WumpiLogger implements ILogger {
   }
 
   public async warn(...message: readonly string[]) {
-    for (const msg of message) this.pino.fatal(msg);
-    const newLog = new Log();
+    for (const msg of message) this.pino.warn(msg);
+    const newLog = new Logs();
     newLog.message = message.join(' ');
     newLog.kind = 'WARN';
     newLog.timestamp = new Date().toISOString();

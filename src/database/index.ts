@@ -16,12 +16,12 @@ const initDb = async () => {
 
 export default initDb;
 
-export { Log } from './entities/Log';
-export { Lockdown } from './entities/Lockdown';
-export { Permission } from './entities/Permission';
+export { Logs } from './entities/Log';
+export { Lockdowns } from './entities/Lockdown';
+export { Permissions } from './entities/Permission';
 export { Settings } from './entities/Setting';
-export { ModeratorLog } from './entities/ModeratorLog';
-export { Ticket } from './entities/Ticket';
+export { ModeratorLogs } from './entities/ModeratorLog';
+export { Tickets } from './entities/Ticket';
 export { Warnings } from './entities/Warning';
 
 export * from './utilities';

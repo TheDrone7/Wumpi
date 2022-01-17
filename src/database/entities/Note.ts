@@ -1,7 +1,7 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 
 @Entity()
-export class Tickets {
+export class Notes {
   @PrimaryKey()
   id!: number;
 
@@ -9,11 +9,8 @@ export class Tickets {
   userId!: string;
 
   @Property()
-  channelId!: string;
+  guildId!: string;
 
   @Property()
-  status!: string;
-
-  @Property()
-  messages!: string[];
+  note!: string;
 }

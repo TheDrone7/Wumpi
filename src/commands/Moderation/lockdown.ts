@@ -2,7 +2,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions, Args } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 import { Duration } from '@sapphire/time-utilities';
-import { Permission, Lockdown } from '../../database';
+import { Permissions, Lockdowns } from '../../database';
 import details from '../../lib/details';
 
 @ApplyOptions<CommandOptions>({
@@ -29,7 +29,7 @@ export class LockdownCommand extends Command {
 
     const channels = await message.guild!.channels.fetch();
     for (const channel of channels.values()) {
-      const overwrite = new Permission();
+      const overwrite = new Permissions();
       overwrite.id = channel.id;
       overwrite.perms = JSON.stringify(channel.permissionOverwrites.cache.toJSON());
       db.persist(overwrite);
@@ -53,7 +53,7 @@ export class LockdownCommand extends Command {
       );
     }
 
-    const lockdown = new Lockdown();
+    const lockdown = new Lockdowns();
     lockdown.guildId = message.guild!.id;
     lockdown.endTime = Date.now() + duration;
     db.persist(lockdown);
