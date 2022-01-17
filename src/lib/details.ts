@@ -29,9 +29,18 @@ export default {
   If not specified, the reason defaults to \`No reason\`.
   Notifies the user being kicked via DMs if possible.`,
 
-  warn: `This command will warn the user in the server. You can optionally specify a reason. 
+  warn: `This command enables you to manage a user's warnings.
+  The first you need to specify if you want to "add", "remove" or "show" warnings.
+  
+  When adding a warning, you need to additionally specify the user you want to warn and optionally a reason. 
   If not specified, the reason defaults to \`No reason\`.
-  Notifies the user being warned via DMs if possible.`,
+  Notifies the user being warned via DMs if possible.
+  
+  When deleting a warning, the warning's ID has to be specified that needs to be deleted.
+  All warnings have unique IDs even if they were for different people or even different servers.
+  You can only remove a warning from a server you have sufficient permissions in.
+  
+  When viewing a user's warnings, you need to provide the user whose warnings need to be shown.`,
 
   timeout: `This command will timeout the user from the server for the specified amount of time. You can optionally specify a reason.
   If not specified, the time defaults to 5m (5 minutes).
@@ -49,9 +58,16 @@ export default {
   help: `This command displays either the list of all commands or the details of the specified command.
   If no command is specified, the list is displayed, if a valid command is specified, it's details are shown.`,
 
-  unwarn: `This command will delete a warning whose ID has been specified.
-  All warnings have unique IDs even if they were for different people or even different servers.
-  You can only remove a warning from a server you have sufficient permissions in.`,
-
-  note: ''
+  note: `This command enables you to manage a user's notes.
+  The first you need to specify if you want to "add", "remove" or "show" notes.
+  
+  When adding a note, you need to additionally specify the user you want to add a note to followed by the note itself. 
+  If not specified, the note defaults to \`No note\`.
+  Does NOT notify the user.
+  
+  When deleting a note, the note's ID has to be specified that needs to be deleted.
+  All notes have unique IDs even if they were for different people or even different servers.
+  You can only remove a note from a server you have sufficient permissions in.
+  
+  When viewing a user's notes, you need to provide the user whose notes need to be shown.`
 };

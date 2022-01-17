@@ -24,7 +24,7 @@ export class NotesCommand extends SubCommandPluginCommand {
     const member = await args.pick('member').catch(() => {
       message.reply('Please provide a user to add a note to.');
     });
-    const reason = args.finished ? 'No reason.' : await args.rest('string');
+    const reason = args.finished ? 'No note.' : await args.rest('string');
 
     if (!member) return;
     const guild = message.guild!;

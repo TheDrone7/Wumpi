@@ -11,7 +11,7 @@ import { colors } from '../../lib/constants';
 @ApplyOptions<SubCommandPluginCommand.Options>({
   name: 'warn',
   aliases: ['warnings', 'warning', 'warns'],
-  description: 'Warn a user in your server!',
+  description: "Manage a user's warnings in your server!",
   category: 'Moderation',
   syntax: '<(add)|(remove|delete)|(show|view)> (<member> [reason])|(<id>)|(<member>)',
   runIn: 'GUILD_ANY',
