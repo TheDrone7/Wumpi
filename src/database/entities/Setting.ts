@@ -31,4 +31,7 @@ export class Settings {
 
   @Property({ nullable: true })
   userOnly?: string[];
+
+  @Property({ nullable: true })
+  botChannel?: string;
 }

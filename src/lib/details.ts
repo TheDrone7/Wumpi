@@ -3,6 +3,8 @@ export default {
   
   **1. user-only**: Only users can send messages in this channel, any messages sent by bots will be deleted.
   
+  **1. bot-only**: Bot commands will only work in this channel, will mention the user to use this channel in this channel if they attempted to use a command elsewhere.
+  
   **2. suggestions**: Any messages sent in this channel will be deleted, resent by the bot, with a poll system.
   
   **3. support**: This has to be a channel category and not a text channel. Setting this will enable support commands in your server. Any new support channels will be created under this category.
