@@ -5,6 +5,9 @@ export class Automod {
   @PrimaryKey()
   guildId!: string;
 
+  @Property({ nullable: true })
+  staff?: string;
+
   @Property()
   blacklist: string[] = [];
 

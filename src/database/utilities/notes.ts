@@ -4,23 +4,23 @@ import { Notes } from '../entities/Note';
 
 export const addNote = (user: Snowflake, guild: Snowflake, note: string) => {
   const db = container.db.em.fork();
-  const newWarning = new Notes();
-  newWarning.userId = user;
-  newWarning.guildId = guild;
-  newWarning.note = note;
-  return db.persistAndFlush([newWarning]);
+  const newNote = new Notes();
+  newNote.userId = user;
+  newNote.guildId = guild;
+  newNote.note = note;
+  return db.persistAndFlush([newNote]);
 };
 
 export const getNotes = async (userId: Snowflake, guildId: Snowflake) => {
   const db = container.db.em.fork();
-  const notes = await db.find(Notes, { userId, guildId });
-  const warnings = [];
-  for (const noteObject of notes) {
+  const notesList = await db.find(Notes, { userId, guildId });
+  const notes = [];
+  for (const noteObject of notesList) {
     const { id, note } = noteObject;
     const user = await container.client.users.fetch(userId);
-    warnings.push({ id, user, note });
+    notes.push({ id, user, note });
   }
-  return warnings;
+  return notes;
 };
 
 export const deleteNote = async (id: number, guildId: Snowflake) => {

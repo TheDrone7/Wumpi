@@ -2,7 +2,7 @@ import { Settings } from '../../index';
 import { container } from '@sapphire/framework';
 import type { Snowflake } from 'discord.js';
 
-type restrictedChannelKind = 'user'|'suggestions'|'bot';
+type restrictedChannelKind = 'user' | 'suggestions' | 'bot';
 
 export const setChannelType = async (channelId: Snowflake, guildId: Snowflake, kind: restrictedChannelKind) => {
   const db = container.db.em.fork();
@@ -15,11 +15,11 @@ export const setChannelType = async (channelId: Snowflake, guildId: Snowflake, k
   if (kind === 'suggestions')
     if (settings.suggestions) settings.suggestions.push(channelId);
     else settings.suggestions = [channelId];
-  if (kind === 'bot')
-    settings.botChannel = channelId;
+  if (kind === 'bot') settings.botChannel = channelId;
 
   settings.supportCategory = channelId;
   await db.persist(settings).flush();
+  container.settings.set(guildId, settings);
 };
 
 export const removeChannelType = async (channelId: Snowflake, guildId: Snowflake, kind: restrictedChannelKind) => {
@@ -34,4 +34,5 @@ export const removeChannelType = async (channelId: Snowflake, guildId: Snowflake
 
   settings.supportCategory = channelId;
   await db.persist(settings).flush();
+  container.settings.set(guildId, settings);
 };
