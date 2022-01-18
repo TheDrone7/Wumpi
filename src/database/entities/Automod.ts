@@ -28,4 +28,7 @@ export class Automod {
 
   @Property()
   ignoreSpam: string[] = [];
+
+  @Property()
+  ignoreInvite: string[] = [];
 }

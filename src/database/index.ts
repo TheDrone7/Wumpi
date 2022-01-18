@@ -4,8 +4,8 @@ const initDb = async () => {
   const orm = await MikroORM.init({
     entitiesTs: ['./src/database/entities/**/*.ts'],
     entities: ['./dist/database/entities/**/*.js'],
-    type: 'sqlite',
-    dbName: 'database.sqlite'
+    type: 'postgresql',
+    clientUrl: process.env.DB_URL
   });
 
   const generator = orm.getSchemaGenerator();
@@ -23,5 +23,6 @@ export { Settings } from './entities/Setting';
 export { ModeratorLogs } from './entities/ModeratorLog';
 export { Tickets } from './entities/Ticket';
 export { Warnings } from './entities/Warning';
+export { Automod } from './entities/Automod';
 
 export * from './utilities';
