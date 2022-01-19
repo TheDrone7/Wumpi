@@ -2,6 +2,8 @@ import { Automod } from '../index';
 import type { Snowflake } from 'discord.js';
 import { container } from '@sapphire/framework';
 
+type ignoreKind = 'blacklist' | 'ratelimit' | 'spam' | 'invites';
+
 export const blacklist = async (word: string, guildId: Snowflake, action: 'add' | 'remove' | 'view') => {
   const db = container.db.em.fork();
   let automod = await db.findOne(Automod, {
@@ -17,7 +19,7 @@ export const blacklist = async (word: string, guildId: Snowflake, action: 'add' 
   return automod.blacklist;
 };
 
-export const ignore = async (guildId: Snowflake, channel: Snowflake, kind: 'bl' | 'rl' | 'spam' | 'inv') => {
+export const ignore = async (guildId: Snowflake, channel: Snowflake, kind: ignoreKind, stop: boolean) => {
   const db = container.db.em.fork();
   let automod = await db.findOne(Automod, {
     guildId
@@ -25,10 +27,18 @@ export const ignore = async (guildId: Snowflake, channel: Snowflake, kind: 'bl' 
   if (!automod) automod = new Automod();
   automod.guildId = guildId;
 
-  if (kind === 'bl') automod.ignoreBlacklist.push(channel);
-  if (kind === 'rl') automod.ignoreRatelimit.push(channel);
-  if (kind === 'spam') automod.ignoreSpam.push(channel);
-  if (kind === 'inv') automod.ignoreInvite.push(channel);
+  if (kind === 'blacklist')
+    if (!stop) automod.ignoreBlacklist.push(channel);
+    else automod.ignoreBlacklist = automod.ignoreBlacklist.filter((c) => c !== channel);
+  if (kind === 'ratelimit')
+    if (!stop) automod.ignoreRatelimit.push(channel);
+    else automod.ignoreRatelimit = automod.ignoreRatelimit.filter((c) => c !== channel);
+  if (kind === 'spam')
+    if (!stop) automod.ignoreSpam.push(channel);
+    else automod.ignoreSpam = automod.ignoreSpam.filter((c) => c !== channel);
+  if (kind === 'invites')
+    if (!stop) automod.ignoreInvite.push(channel);
+    else automod.ignoreInvite = automod.ignoreInvite.filter((c) => c !== channel);
   await db.persistAndFlush([automod]);
   container.automod.set(guildId, automod);
 };
