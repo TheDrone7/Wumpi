@@ -11,7 +11,7 @@ import { addNote, deleteNote, getNotes } from '../../database/utilities/notes';
   aliases: ['notes'],
   description: "Manage a user's moderator notes in your server!",
   category: 'Moderation',
-  syntax: '<(add)|(remove|delete)|(show|view)> (<member> [note])|(<id>)|(<member>)',
+  syntax: '(add <member> [note]) | (remove|delete <id>) | (show|view <member>)',
   runIn: 'GUILD_ANY',
   cooldownDelay: 5_000,
   detailedDescription: details.note,

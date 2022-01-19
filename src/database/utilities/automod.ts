@@ -28,17 +28,21 @@ export const ignore = async (guildId: Snowflake, channel: Snowflake, kind: ignor
   automod.guildId = guildId;
 
   if (kind === 'blacklist')
-    if (!stop) automod.ignoreBlacklist.push(channel);
-    else automod.ignoreBlacklist = automod.ignoreBlacklist.filter((c) => c !== channel);
+    if (!stop) {
+      if (!automod.ignoreBlacklist.includes(channel)) automod.ignoreBlacklist.push(channel);
+    } else automod.ignoreBlacklist = automod.ignoreBlacklist.filter((c) => c !== channel);
   if (kind === 'ratelimit')
-    if (!stop) automod.ignoreRatelimit.push(channel);
-    else automod.ignoreRatelimit = automod.ignoreRatelimit.filter((c) => c !== channel);
+    if (!stop) {
+      if (!automod.ignoreRatelimit.includes(channel)) automod.ignoreRatelimit.push(channel);
+    } else automod.ignoreRatelimit = automod.ignoreRatelimit.filter((c) => c !== channel);
   if (kind === 'spam')
-    if (!stop) automod.ignoreSpam.push(channel);
-    else automod.ignoreSpam = automod.ignoreSpam.filter((c) => c !== channel);
+    if (!stop) {
+      if (!automod.ignoreSpam.includes(channel)) automod.ignoreSpam.push(channel);
+    } else automod.ignoreSpam = automod.ignoreSpam.filter((c) => c !== channel);
   if (kind === 'invites')
-    if (!stop) automod.ignoreInvite.push(channel);
-    else automod.ignoreInvite = automod.ignoreInvite.filter((c) => c !== channel);
+    if (!stop) {
+      if (!automod.ignoreInvite.includes(channel)) automod.ignoreInvite.push(channel);
+    } else automod.ignoreInvite = automod.ignoreInvite.filter((c) => c !== channel);
   await db.persistAndFlush([automod]);
   container.automod.set(guildId, automod);
 };

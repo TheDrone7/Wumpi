@@ -31,6 +31,7 @@
     "@sapphire/utilities": "^3.1.0",
     "bull": "^4.2.0",
     "discord.js": "^13.3.1",
+    "dotenv": "^14.2.0",
     "pino": "^7.6.2",
     "pino-pretty": "^7.3.0"
   },

@@ -72,5 +72,6 @@ export default {
   You can only remove a note from a server you have sufficient permissions in.
   
   When viewing a user's notes, you need to provide the user whose notes need to be shown.`,
-  blacklist: ``
+  blacklist: ``,
+  ignore: ``
 };
