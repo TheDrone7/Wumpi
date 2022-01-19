@@ -12,7 +12,7 @@ export const blacklist = async (word: string, guildId: Snowflake, action: 'add' 
   if (!automod) automod = new Automod();
   automod.guildId = guildId;
 
-  if (action === 'add') automod.blacklist.push(word);
+  if (action === 'add' && !automod.blacklist.includes(word)) automod.blacklist.push(word);
   if (action === 'remove') automod.blacklist = automod.blacklist.filter((w) => w !== word);
   if (action !== 'view') await db.persistAndFlush([automod]);
   container.automod.set(guildId, automod);
