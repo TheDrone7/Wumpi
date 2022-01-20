@@ -16,9 +16,13 @@ import { blacklist } from '../../database/utilities/automod';
   detailedDescription: details.blacklist,
   requiredUserPermissions: ['ADMINISTRATOR'],
   requiredClientPermissions: ['ADMINISTRATOR'],
-  subCommands: ['add', 'remove', 'delete', 'show', 'view']
+  subCommands: ['add', 'remove', 'delete', 'show', 'view', { input: 'default', default: true }]
 })
 export class BlackListCommand extends SubCommandPluginCommand {
+  public default(message: Message) {
+    return message.reply('Please specify a valid action - `add`, `remove`, `delete`, `show`, `view`.');
+  }
+
   public async add(message: Message, args: Args) {
     const word = await args.pick('string');
 

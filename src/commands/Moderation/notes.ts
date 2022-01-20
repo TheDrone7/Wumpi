@@ -17,9 +17,13 @@ import { addNote, deleteNote, getNotes } from '../../database/utilities/notes';
   detailedDescription: details.note,
   requiredUserPermissions: ['MODERATE_MEMBERS'],
   requiredClientPermissions: ['MODERATE_MEMBERS'],
-  subCommands: ['add', 'remove', 'delete', 'show', 'view']
+  subCommands: ['add', 'remove', 'delete', 'show', 'view', { input: 'default', default: true }]
 })
 export class NotesCommand extends SubCommandPluginCommand {
+  public default(message: Message) {
+    return message.reply('Please specify a valid action - `add`, `remove`, `delete`, `show`, `view`.');
+  }
+
   public async add(message: Message, args: Args) {
     const member = await args.pick('member').catch(() => {
       message.reply('Please provide a user to add a note to.');

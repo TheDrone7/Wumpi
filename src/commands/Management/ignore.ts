@@ -16,9 +16,13 @@ import { ignore } from '../../database/utilities/automod';
   detailedDescription: details.ignore,
   requiredUserPermissions: ['ADMINISTRATOR'],
   requiredClientPermissions: ['ADMINISTRATOR'],
-  subCommands: ['enable', 'disable']
+  subCommands: ['enable', 'disable', { input: 'default', default: true }]
 })
 export class BlackListCommand extends SubCommandPluginCommand {
+  public default(message: Message) {
+    return message.reply('Please specify a valid action - `enable`, `disable`.');
+  }
+
   public async enable(message: Message, args: Args) {
     const kind = <'blacklist' | 'ratelimit' | 'spam' | 'invites'>await args.pick('string');
     if (!kind) return message.reply('Please specify the feature you want to ignore.');
