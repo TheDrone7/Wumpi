@@ -58,6 +58,8 @@ export class HelpCommand extends Command {
       );
       if (!searched) return message.channel.send('This command was not found.');
       else {
+        const perms = await searched.preconditions.run(message, searched, { external: true });
+        if (!perms.success) return message.reply('Not enough permissions.');
         const options = searched.options;
         const embed = helpEmbed(`${options.name} Command`)
           .addField('Category', options.category + ' Commands')
