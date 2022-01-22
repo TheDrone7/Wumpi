@@ -24,10 +24,10 @@ export class BlackListCommand extends SubCommandPluginCommand {
   }
 
   public async enable(message: Message, args: Args) {
-    const kind = <'blacklist' | 'ratelimit' | 'spam' | 'invites'>await args.pick('string');
+    const kind = <'blacklist' | 'ratelimit' | 'spam' | 'invites'>await args.pick('string').catch();
     if (!kind) return message.reply('Please specify the feature you want to ignore.');
 
-    const channel = await args.pick('channel');
+    const channel = await args.pick('channel').catch();
     if (!channel) return message.reply('Please specify the channel to start ignoring.');
 
     try {
@@ -41,10 +41,10 @@ export class BlackListCommand extends SubCommandPluginCommand {
   }
 
   public async disable(message: Message, args: Args) {
-    const kind = <'blacklist' | 'ratelimit' | 'spam' | 'invites'>await args.pick('string');
+    const kind = <'blacklist' | 'ratelimit' | 'spam' | 'invites'>await args.pick('string').catch();
     if (!kind) return message.reply('Please specify the feature you want to ignore.');
 
-    const channel = await args.pick('channel');
+    const channel = await args.pick('channel').catch();
     if (!channel) return message.reply('Please specify the channel to stop ignoring.');
 
     try {

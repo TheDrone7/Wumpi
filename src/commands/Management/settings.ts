@@ -21,13 +21,13 @@ import details from '../../lib/details';
   runIn: 'GUILD_ANY',
   cooldownDelay: 10_000,
   flags: ['disable'],
-  syntax: '<channel-type> [--disable] <channel>',
+  syntax: '<setting> [--disable] <channel>',
   detailedDescription: details.set,
   requiredUserPermissions: ['ADMINISTRATOR']
 })
 export class SettingsCommand extends Command {
   public async messageRun(message: Message, args: Args) {
-    const kind = (await args.pick('string')).toLowerCase().trim();
+    const kind = (await args.pick('string').catch(() => '')).toLowerCase().trim();
     const disable = args.getFlags('disable');
     const channel = await args.pick('channel').catch(async () => await args.pick('string').catch(() => 'null'));
 

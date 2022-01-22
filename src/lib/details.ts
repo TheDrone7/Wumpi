@@ -73,5 +73,7 @@ export default {
   
   When viewing a user's notes, you need to provide the user whose notes need to be shown.`,
   blacklist: ``,
-  ignore: ``
+  ignore: ``,
+  ratelimit: ``,
+  staff: ``
 };

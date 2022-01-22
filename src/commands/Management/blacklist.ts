@@ -24,7 +24,7 @@ export class BlackListCommand extends SubCommandPluginCommand {
   }
 
   public async add(message: Message, args: Args) {
-    const word = await args.pick('string');
+    const word = await args.pick('string').catch();
 
     if (!word) return message.reply('Please specify the word you want to add to the blacklist.');
 
@@ -39,7 +39,7 @@ export class BlackListCommand extends SubCommandPluginCommand {
   }
 
   public async remove(message: Message, args: Args) {
-    const word = await args.pick('string');
+    const word = await args.pick('string').catch();
 
     if (!word) return message.reply('Please specify the word you want to remove from the blacklist.');
 
