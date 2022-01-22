@@ -11,7 +11,6 @@ export default class WumpiClient extends SapphireClient {
     container.client = this;
     container.settings = new Collection();
     container.automod = new Collection();
-    container.filters = new Collection();
 
     this.fetchPrefix = () => 'w-';
 

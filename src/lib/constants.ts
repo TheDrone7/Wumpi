@@ -18,3 +18,19 @@ export const RandomLoadingMessage = [
   'Give me a moment',
   'Loading...'
 ];
+
+export const AutomodLog = {
+  blacklist: 'Use of a blacklisted word.',
+  invite: 'Sent a discord invite.',
+  ratelimit: 'Sending messages too quickly',
+  emojis: 'Too many emojis',
+  spam: 'Too many duplicated characters'
+};
+
+export const AutomodMessage = {
+  blacklist: 'You just used a bad word. Please do not use those.',
+  invite: "You just sent an invite. That's not allowed here.",
+  ratelimit: 'You are sending messages too quickly!',
+  emojis: 'Your message right now had too many emojis!',
+  spam: 'Your message right now was too spammy.'
+};
