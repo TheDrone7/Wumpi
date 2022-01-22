@@ -1,5 +1,5 @@
 export default {
-  set: `This command is used to modify the types of channels. The valid channel types are
+  set: `This command is used to modify the types of channels and the support message. The valid channel types are
   
   **1. user-only**: Only users can send messages in this channel, any messages sent by bots will be deleted.
   
@@ -72,8 +72,31 @@ export default {
   You can only remove a note from a server you have sufficient permissions in.
   
   When viewing a user's notes, you need to provide the user whose notes need to be shown.`,
-  blacklist: ``,
-  ignore: ``,
-  ratelimit: ``,
-  staff: ``
+  blacklist: `This command enables you to manage blacklisted words in your server.
+  If a user uses a blacklisted word in a message, their message is deleted and they are sent a warning.
+  If the user has the staff role, they can bypass this check and use blacklisted words regardless.
+  
+  When adding/removing a word to/from the blacklist, the word being added/removed has to be specified.
+  You can also view the current list of blacklisted words if you're unsure of what words are banned and what are allowed.`,
+  ignore: `This command can be used to make the bot ignore specific channels for specific automod checks.
+  
+  You can ignore \`blacklist\`, \`spam\`, \`invites\`, and \`ratelimit\` checks in any channel you specify.
+  
+  If you \`enable\`, the bot will ignore the specified check in the specified channel.
+  If you \`disable\` the bot will perform the specified check in the specified channel.
+  
+  By default, all checks are performed in all channels.`,
+  ratelimit: `This command allows you to control the message rate limit by the users.
+  You can set the count to a number, such as 5, 10, etc.
+  And you can set the duration to some amount of time such as 2m.
+  The provided timing has to be one-word (5minutes) or multiple words in quotes ("5 minutes").
+  
+  To explain how this works, lets assume the count is \`5\` and the duration is \`1 minute\`.
+  Then, if a user sends more than 5 messages in 1 minute, they will be muted/timed out for \`1 hour\` and warned.
+  
+  This is NOT channel-specific, this enforces the rate limit all over the server.`,
+  staff: `This command is used to update the staff role.
+  People with the staff role can bypass automod.
+  
+  For using the moderation commands however, they would still need the right permissions for each command.`
 };
