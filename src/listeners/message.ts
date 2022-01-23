@@ -33,6 +33,9 @@ export class MessageListener extends Listener {
           guildId: message.guildId
         });
       if (automod) {
+        const memberRoles = message.member!.roles.cache;
+        if (automod.staff && memberRoles.has(automod.staff)) return;
+
         if (!automod.ignoreBlacklist.includes(message.channel.id))
           if (automod.blacklist.some((w) => message.content.includes(w))) return this.moderate(message, 'blacklist');
 
