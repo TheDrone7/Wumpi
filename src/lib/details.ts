@@ -94,9 +94,25 @@ export default {
   To explain how this works, lets assume the count is \`5\` and the duration is \`1 minute\`.
   Then, if a user sends more than 5 messages in 1 minute, they will be muted/timed out for \`1 hour\` and warned.
   
-  This is NOT channel-specific, this enforces the rate limit all over the server.`,
+  This is NOT channel-specific, this enforces the rate limit all over the server.
+  
+  To disable this check, run the command but do not provide any value for the amount.`,
   staff: `This command is used to update the staff role.
   People with the staff role can bypass automod.
   
-  For using the moderation commands however, they would still need the right permissions for each command.`
+  For using the moderation commands however, they would still need the right permissions for each command.`,
+  spam: `This command allows you to control the amount of emojis and repeated words allowed in a message in your server.
+  You can set the count to a number, such as 5, 10, etc.
+  
+  If the user uses more emojis in a message than the specified amount, their message will be deleted and they will be warned.
+  As for the spam limit,
+  If the user uses the same word OR character more than the specified number of times, their message will be deleted and they will be warned.
+  
+  For example, if the word count is set to 5
+  AAAAA will be allowed but AAAAAA will not be allowed, similarly
+  xd xd xd xd xd will be allowed but xd xd xd xd xd xd will not be allowed.
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaa will be allowed.
+  
+  The repeated characters check is only applicable to uppercase letters.
+  To disable this check, run the command but do not provide any value for the amount.`
 };

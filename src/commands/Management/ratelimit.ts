@@ -11,7 +11,7 @@ import { Duration } from '@sapphire/time-utilities';
   aliases: ['rate-limit', 'message-limit'],
   description: 'Specify the number of messages that can be sent in a certain duration!',
   category: 'Management',
-  syntax: '<count|duration> <amount>',
+  syntax: '<count|duration> [amount]',
   runIn: 'GUILD_ANY',
   cooldownDelay: 5_000,
   detailedDescription: details.ratelimit,

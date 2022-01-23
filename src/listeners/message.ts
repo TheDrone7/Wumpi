@@ -59,10 +59,15 @@ export class MessageListener extends Listener {
           )
             return this.moderate(message, 'emojis');
 
-          if (automod.capitalsLimit && automod.capitalsLimit > 0) {
+          if (automod.capitalsLimit && automod.capitalsLimit > 1) {
             const pattern = `(\\w)\\${automod.capitalsLimit}+`;
-            const matches = message.content.match(pattern) || [];
+            const exp = new RegExp(pattern, 'gi');
+            const matches = message.content.match(exp) || [];
             if (matches.length > automod.capitalsLimit) return this.moderate(message, 'spam');
+            const wordPattern = `\\b(\\w+)${'\\s+\\1'.repeat(automod.capitalsLimit - 1)}\\b`;
+            const wordExp = new RegExp(wordPattern, 'gi');
+            const wordMatches = message.content.match(wordExp) || [];
+            if (wordMatches.length) return this.moderate(message, 'spam');
           }
         }
       }
