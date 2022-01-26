@@ -34,7 +34,8 @@ const config: ClientOptions = {
         }
       }
     })
-  }
+  },
+  hmr: { enabled: process.env.NODE_ENV !== 'production' }
 };
 
 export default config;

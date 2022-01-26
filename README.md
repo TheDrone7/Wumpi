@@ -46,6 +46,7 @@ https://discord.gg/mPPBNty
   REDIS_HOST="<my-redis-server-host-address-here>"
   REDIS_PORT="<my-redis-servert-port-here>"
   REDIS_PASSWORD="<my-redis-server-connection-password-here>"
+  NODE_ENV="production"
   ```
   You can get your `DISCORD_TOKEN` from the [discord developer's dashboard](https://discord.com/developers/applications/).
 
@@ -63,4 +64,5 @@ https://discord.gg/mPPBNty
   $ npm run build
   $ npm run dev
   ```
-  and this will enable hot module reload, so you don't have to restart your bot every time you make change some part in the bot.
+  ALSO, change `NODE_ENV` from `production` to `development` in your `.env` file,
+  this will enable hot module reload, so you don't have to restart your bot every time you make change some part in the bot.
