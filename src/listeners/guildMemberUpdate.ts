@@ -18,7 +18,7 @@ export class MemberUpdateListener extends Listener {
       guildId: member.guild.id
     });
     if (guildSettings?.moderatorLogs) {
-      const logsChannel = (await member.guild.channels.fetch(guildSettings.moderatorLogs)) as TextChannel;
+      const logsChannel = <TextChannel>await member.guild.channels.fetch(guildSettings.moderatorLogs);
       if (typeof oldMember.communicationDisabledUntilTimestamp !== typeof member.communicationDisabledUntilTimestamp) {
         let embed;
         if (member.communicationDisabledUntilTimestamp === null) {

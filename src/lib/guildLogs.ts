@@ -7,7 +7,7 @@ export const moderatorLog = async (guildId: Snowflake, message: MessageEmbed) =>
   const settings = await db.findOne(Settings, { guildId });
   const guild = await container.client.guilds.fetch(guildId);
   if (settings?.moderatorLogs) {
-    const logsChannel = (await guild.channels.fetch(settings.moderatorLogs)) as TextChannel;
+    const logsChannel = <TextChannel>await guild.channels.fetch(settings.moderatorLogs);
     await logsChannel.send({ embeds: [message] });
   }
 };

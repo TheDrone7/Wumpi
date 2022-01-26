@@ -15,7 +15,7 @@ import { helpEmbed } from '../../lib/embeds';
 export class HelpCommand extends Command {
   public async messageRun(message: Message, args: Args) {
     const command = args.finished ? 'all' : await args.pick('string');
-    const commandStore = this.store as CommandStore;
+    const commandStore = <CommandStore>this.store;
     const commandsList = commandStore.values();
     const prefix = this.container.client.fetchPrefix(message)!;
 

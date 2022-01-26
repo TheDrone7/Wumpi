@@ -26,7 +26,7 @@ export class BanListener extends Listener {
       guildId: guild.id
     });
     if (guildSettings?.moderatorLogs) {
-      const logsChannel = (await guild.channels.fetch(guildSettings.moderatorLogs)) as TextChannel;
+      const logsChannel = <TextChannel>await guild.channels.fetch(guildSettings.moderatorLogs);
       const desc = `**TAG:** ${user.tag}\n**ID:** ${user.id}`;
 
       const embed = notification(user, 'error', 'Member Banned', desc);

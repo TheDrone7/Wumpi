@@ -17,7 +17,7 @@ export class JoinListener extends Listener {
       guildId: member.guild.id
     });
     if (guildSettings?.joinLogs) {
-      const logsChannel = (await member.guild.channels.fetch(guildSettings.joinLogs)) as TextChannel;
+      const logsChannel = <TextChannel>await member.guild.channels.fetch(guildSettings.joinLogs);
       const desc = `**TAG:** ${member.user.tag}\n**ID:** ${member.id}`;
       const embed = notification(member.user, 'success', 'New Member', desc);
       embed

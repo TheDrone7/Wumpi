@@ -15,7 +15,7 @@ import { colors } from '../../lib/constants';
 export class EchoCommand extends Command {
   async messageRun(message: Message, args: Args) {
     const useEmbed = args.getFlags('embed');
-    const channel = (await args.pick('channel').catch(() => message.channel)) as TextChannel;
+    const channel = <TextChannel>await args.pick('channel').catch(() => message.channel);
     const msg = args.finished ? undefined : await args.rest('string');
     if (!msg) return message.reply('You must specify a message to repeat.');
 
