@@ -15,7 +15,6 @@ Snow - Artist
 ### Features:
 - Web UI
 - Ticket/Support system
-- Backup system
 - Auto-moderation
   - Anti-spam
   - Auto-slowmode
@@ -23,10 +22,9 @@ Snow - Artist
   - Filter swearing/racial slurs
   
 - Moderation
-  - Ban/Unban, Kick, Mute/Unmute
-  - Temp Ban, Kick, Mute
+  - Ban/Unban, Kick, Mute/Timeout
   - Warning system
-  - Mass unban
+  - Moderator notes system
   
 - Miscellaneous
   - Invite Manager
@@ -39,3 +37,30 @@ https://discord.gg/mPPBNty
 - Invite Bot with [Invite Link](https://discordapp.com/oauth2/authorize?client_id=592568340485111827&permissions=8&scope=bot)
 - Use [Web Panel(WIP)]()
 
+## Setup for self hosting
+- Install [Node.js](https://nodejs.org/) (LTS), [PostgreSQL](https://www.postgresql.org/) and [Redis](https://redis.io/). You can also get these hosted on the cloud.
+- Create a new file named `.env` and inside it, add the following content: -
+  ```
+  DISCORD_TOKEN="<my-discord-bot-token-here>"
+  DB_URL="<my-postgresql-connection-uri-here>"
+  REDIS_HOST="<my-redis-server-host-address-here>"
+  REDIS_PORT="<my-redis-servert-port-here>"
+  REDIS_PASSWORD="<my-redis-server-connection-password-here>"
+  ```
+  You can get your `DISCORD_TOKEN` from the [discord developer's dashboard](https://discord.com/developers/applications/).
+
+  Your `DB_URL` by default will be `postgresql://postgres:password@localhost:5432/wumpi` where password may either be what you set it to, or not required.
+  
+  Your `REDIS_HOST`, `REDIS_PORT` will default to `localhost` and `6379` respectively (or get from the cloud host). `REDIS_PASSWORD` may be what you set it to.
+- After this, open up a terminal window and run the following commands -
+  ```shell
+  $ npm run build
+  $ npm run start
+  ```
+
+- In case you want to add to the bot, run in dev mode by running the following code - 
+  ```shell
+  $ npm run build
+  $ npm run dev
+  ```
+  and this will enable hot module reload, so you don't have to restart your bot every time you make change some part in the bot.
