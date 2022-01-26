@@ -9,7 +9,10 @@ export class DeniedListener extends Listener {
   }
 
   public async run(error: UserError, { message }: CommandDeniedPayload) {
-    await this.container.logger.warn(error.message);
-    return message.reply(error.message);
+    if (error.message !== 'not-bot') {
+      await this.container.logger.warn(error.message);
+      return message.reply(error.message);
+    }
+    return;
   }
 }
