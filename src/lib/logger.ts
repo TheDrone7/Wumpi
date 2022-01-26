@@ -11,6 +11,7 @@ class WumpiLogger implements ILogger {
 
   constructor(db: MikroORM, level?: LogLevel) {
     this.pino = pino(
+      { level: level?.toString().toLowerCase() || 'debug' },
       pretty({
         colorize: true,
         translateTime: true

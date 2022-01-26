@@ -52,7 +52,7 @@ export class SettingsCommand extends Command {
         else await setChannelType(channel.id, message.guild!.id, 'user');
       else if (kind === 'bot-only' && channel !== 'null')
         if (disable) await removeChannelType(channel.id, message.guild!.id, 'bot');
-        else await setChannelType(channel.id, message.guild!.id, 'user');
+        else await setChannelType(channel.id, message.guild!.id, 'bot');
       else if (kind === 'suggestions' && channel !== 'null')
         if (disable) await removeChannelType(channel.id, message.guild!.id, 'suggestions');
         else await setChannelType(channel.id, message.guild!.id, 'suggestions');

@@ -1,9 +1,9 @@
 import { Listener, PieceContext, ListenerOptions } from '@sapphire/framework';
-import type { Message } from 'discord.js';
-import { Automod, Tickets, Warnings } from '../database';
+import { type Message, type TextChannel, MessageEmbed } from 'discord.js';
+import { Automod, Settings, Tickets, Warnings } from '../database';
 import { moderatorLog } from '../lib/guildLogs';
 import { notification } from '../lib/embeds';
-import { AutomodLog, AutomodMessage } from '../lib/constants';
+import { AutomodLog, AutomodMessage, colors } from '../lib/constants';
 
 export class MessageListener extends Listener {
   public constructor(context: PieceContext, options: ListenerOptions) {
@@ -15,7 +15,7 @@ export class MessageListener extends Listener {
 
   public async run(message: Message) {
     const db = this.container.db.em.fork();
-    if (message.guildId) {
+    if (message.guild) {
       // Log ticket message.
       const ticket = await db.findOne(Tickets, {
         channelId: message.channel.id,
@@ -26,12 +26,46 @@ export class MessageListener extends Listener {
         await db.persistAndFlush([ticket]);
       }
 
+      const guildSettings = this.container.settings.has(message.guild.id)
+        ? this.container.settings.get(message.guild.id)
+        : await db.findOne(Settings, {
+            guildId: message.guild.id
+          });
+
+      if (guildSettings) {
+        const prefix = this.container.client.fetchPrefix(message);
+        if (guildSettings.userOnly?.includes(message.channel.id)) await message.delete();
+        if (
+          guildSettings.botChannel &&
+          message.content.startsWith(prefix!.toString()) &&
+          guildSettings.botChannel !== message.channel.id
+        ) {
+          const channel = <TextChannel>await message.guild.channels.fetch(guildSettings.botChannel);
+          await channel.send({
+            content: `${message.author.toString()} Please use the bot commands here.`,
+            allowedMentions: { users: [message.author.id] }
+          });
+        }
+        if (guildSettings.suggestions?.includes(message.channel.id) && !message.author.bot) {
+          const { content, member } = message;
+          const embed = new MessageEmbed()
+            .setTitle('NEW SUGGESTION - ' + member!.user.tag)
+            .setThumbnail(member!.displayAvatarURL())
+            .setDescription(content)
+            .setColor(colors.blurple);
+          const msg = await message.channel.send({ embeds: [embed] });
+          await msg.react('👍');
+          await msg.react('👎');
+          await message.delete();
+        }
+      }
+
       // Automod checks
-      let automod = <Automod | null | undefined>this.container.automod.get(message.guildId);
-      if (!automod)
-        automod = await db.findOne(Automod, {
-          guildId: message.guildId
-        });
+      const automod = this.container.automod.has(message.guild.id)
+        ? this.container.automod.get(message.guild.id)
+        : await db.findOne(Automod, {
+            guildId: message.guildId
+          });
       if (automod) {
         const memberRoles = message.member!.roles.cache;
         if (automod.staff && memberRoles.has(automod.staff)) return;
