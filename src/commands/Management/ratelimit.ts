@@ -25,7 +25,7 @@ export class BlackListCommand extends SubCommandPluginCommand {
   }
 
   public async count(message: Message, args: Args) {
-    const num = await args.pick('number').catch();
+    const num = await args.pick('number').catch(() => undefined);
 
     try {
       if (num) await limit(message.guild!.id, 'rlCount', num);
@@ -40,7 +40,7 @@ export class BlackListCommand extends SubCommandPluginCommand {
   }
 
   public async duration(message: Message, args: Args) {
-    const time = await args.pick('string').catch();
+    const time = await args.pick('string').catch(() => undefined);
     const duration = time ? new Duration(time).offset : undefined;
 
     try {

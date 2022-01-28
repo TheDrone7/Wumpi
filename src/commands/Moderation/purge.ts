@@ -24,7 +24,7 @@ export class PurgeCommand extends Command {
     const messages = await channel.messages.fetch({ before: message.id, limit: 100 }, { cache: true, force: false });
     if (onlyUser) {
       console.log('Only user');
-      const user = await args.pick('user').catch();
+      const user = await args.pick('user').catch(() => undefined);
       if (!user) return message.reply('Please specify the user whose messages are to be deleted.');
       toDelete = messages.filter((m) => m.author.id === user.id);
     }

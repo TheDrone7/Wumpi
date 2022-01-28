@@ -50,7 +50,7 @@ export class CloseTicketCommand extends Command {
       return await db.persistAndFlush([ticket]);
     } catch (e: any) {
       const embed = notification(message.author, 'error', 'Error', e.stack || e.message || e.toString());
-      return message.channel.send({ embeds: [embed] }).catch();
+      return message.channel.send({ embeds: [embed] });
     }
   }
 }

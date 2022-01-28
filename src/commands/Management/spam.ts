@@ -24,7 +24,7 @@ export class BlackListCommand extends SubCommandPluginCommand {
   }
 
   public async emojis(message: Message, args: Args) {
-    const num = await args.pick('number').catch();
+    const num = await args.pick('number').catch(() => undefined);
 
     try {
       await limit(message.guildId!, 'emojis', num);
@@ -39,7 +39,7 @@ export class BlackListCommand extends SubCommandPluginCommand {
   }
 
   public async words(message: Message, args: Args) {
-    const num = await args.pick('number').catch();
+    const num = await args.pick('number').catch(() => undefined);
 
     try {
       await limit(message.guildId!, 'caps', num);
