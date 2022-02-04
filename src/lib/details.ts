@@ -114,5 +114,6 @@ export default {
   aaaaaaaaaaaaaaaaaaaaaaaaaaaaa will be allowed.
   
   The repeated characters check is only applicable to uppercase letters.
-  To disable this check, run the command but do not provide any value for the amount.`
+  To disable this check, run the command but do not provide any value for the amount.`,
+  welcome: ``
 };

@@ -24,5 +24,6 @@ export { ModeratorLogs } from './entities/ModeratorLog';
 export { Tickets } from './entities/Ticket';
 export { Warnings } from './entities/Warning';
 export { Automod } from './entities/Automod';
+export { Welcome } from './entities/Welcome';
 
 export * from './utilities';
