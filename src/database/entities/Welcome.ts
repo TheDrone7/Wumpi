@@ -13,4 +13,7 @@ export class Welcome {
 
   @Property({ nullable: true })
   image?: string;
+
+  @Property()
+  userId: number = -1;
 }
